@@ -1,8 +1,10 @@
 package components
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 
 	"github.com/xeyossr/pulsarship/internal/models"
@@ -14,10 +16,26 @@ type GitComponent struct {
 	Palette models.PaletteConfig
 }
 
+func findGitRoot(start string) (string, error) {
+	dir := start
+	for {
+		if _, err := os.Stat(filepath.Join(dir, ".git")); err == nil {
+			return dir, nil
+		}
+		parent := filepath.Dir(dir)
+		if parent == dir {
+			return "", fmt.Errorf(".git directory not found")
+		}
+		dir = parent
+	}
+}
+
 func (g *GitComponent) Val() (string, error) {
 	utils.SetDefault(&g.Config.CleanSuffix, "")
 	utils.SetDefault(&g.Config.DirtySuffix, " ^(#F38BA8)[*]^")
-	if _, err := os.Stat(".git"); os.IsNotExist(err) {
+	cwd, _ := os.Getwd()
+	_, err := findGitRoot(cwd)
+	if err != nil {
 		return "", nil
 	}
 
