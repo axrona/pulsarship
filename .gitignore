@@ -31,3 +31,4 @@ go.work.sum
 # Custom for https://github.com/xeyossr/pulsarship
 **/*_test.go
 pulsarship
+build/
