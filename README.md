@@ -67,8 +67,28 @@ eval "$(pulsarship init bash)"
 > `source ~/.config/fish/config.fish` or `source ~/.bashrc` or `source ~/.zshrc`
 
 ## 🛠 Configuration
-💡 Want to tweak the colors, layout, or modules?  
-Head over to the [Wiki](https://github.com/xeyossr/pulsarship/wiki) to explore usage examples, detailed config guides, and tips on getting the most out of Pulsarship.
+The default config file location is `~/.config/pulsarship/pulsarship.toml`
+
+Pulsarship uses TOML-based configuration:
+```toml
+prompt = ```
+{cwd} 
+{character} ```
+
+[cwd]
+format = "^(lavender)[{cwd}]^"
+max_length = 5
+
+[character]
+icon = "❯"
+format = "^(peach){character}^"
+
+[palette]
+lavender = "#b4befe"
+peach = "#fab387"
+```
+
+For more information visit the [Wiki](https://github.com/xeyossr/pulsarship/wiki).
 
 ## 🚧 Roadmap
 - [x] Basic prompt rendering
