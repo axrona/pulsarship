@@ -24,13 +24,13 @@ func (h *HostnameComponent) Val() (string, error) {
 	return hostname, nil
 }
 
-func (h *HostnameComponent) Render() (string, error) {
+func (h *HostnameComponent) Render() (models.Result, error) {
 	utils.SetDefault(&h.Config.Format, "{hostname}")
 	var format string = *h.Config.Format
 
 	val, err := h.Val()
 	if err != nil {
-		return "", err
+		return models.Result{Skip: true}, err
 	}
 
 	rendered, err := utils.RenderFormat(format, map[string]string{
@@ -38,17 +38,17 @@ func (h *HostnameComponent) Render() (string, error) {
 	}, (*map[string]string)(&h.Palette))
 
 	if err != nil {
-		return "", err
+		return models.Result{Skip: true}, err
 	}
 
-	return rendered, nil
+	return models.Result{Value: rendered}, nil
 }
 
 func (c *HostnameComponent) RenderAsync() <-chan models.Result {
 	ch := make(chan models.Result, 1)
 	go func() {
 		val, err := c.Render()
-		ch <- models.Result{Value: val, Error: err}
+		ch <- models.Result{Value: val.Value, Error: err}
 	}()
 	return ch
 }

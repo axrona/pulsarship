@@ -1,7 +1,7 @@
 package models
 
 type Component interface {
-	Render() (string, error)
+	Render() (Result, error)
 	RenderAsync() <-chan Result
 	Name() string
 	Val() (string, error)
@@ -10,6 +10,7 @@ type Component interface {
 type Result struct {
 	Value string
 	Error error
+	Skip  bool
 }
 
 type PromptConfig struct {

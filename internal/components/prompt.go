@@ -81,16 +81,16 @@ func GenPrompt(config models.PromptConfig) (string, error) {
 
 	for _, part := range parts {
 		if part.IsComponent {
-			comp, ok := components[part.Value]
+			_, ok := components[part.Value]
 			if !ok {
 				builder.WriteString("{" + part.Value + "}")
 				continue
 			}
-			rendered, err := comp.Render()
-			if err != nil {
-				return "", err
+			result := results[part.Value]
+			if result.Skip {
+				continue
 			}
-			builder.WriteString(rendered)
+			builder.WriteString(result.Value)
 		} else {
 			builder.WriteString(part.Value)
 		}
