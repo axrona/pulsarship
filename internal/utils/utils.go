@@ -94,9 +94,9 @@ func RenderFormat(format string, components map[string]models.Component, palette
 			key := bracedVarRegex.FindStringSubmatch(m)[1]
 			if comp, ok := components[key]; ok {
 				var val string
-				val, err = comp.Val() // burada err set edilecek
+				val, err = comp.Val()
 				if err != nil {
-					return m // hata varsa değişiklik yapma
+					return m
 				}
 				return val
 			}
@@ -106,12 +106,10 @@ func RenderFormat(format string, components map[string]models.Component, palette
 		return Print(resolved, colorName, palette)
 	})
 
-	// Eğer bir hata olduysa, direkt döndür
 	if err != nil {
 		return "", err
 	}
 
-	// İkinci ReplaceAllStringFunc
 	result = bracedVarRegex.ReplaceAllStringFunc(result, func(m string) string {
 		if err != nil {
 			return m

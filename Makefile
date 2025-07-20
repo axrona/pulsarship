@@ -19,7 +19,7 @@ build:
 	$(GOBUILD) -o $(BUILD_DIR)/$(BINARY) .
 
 .PHONY: install
-install:
+install: build
 	sudo install -Dm755 $(BUILD_DIR)/$(BINARY) /usr/bin/$(BINARY)
 
 .PHONY: fmt
