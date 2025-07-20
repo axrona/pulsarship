@@ -67,7 +67,7 @@ func Print(text, hex string, palette *map[string]string) string {
 
 var (
 	bracedVarRegex  = regexp.MustCompile(`\{([a-zA-Z0-9_]+)\}`)
-	coloredBlockReg = regexp.MustCompile(`\^\((#[a-fA-F0-9]{6}|[a-zA-Z_]+)\)(.*?)\^`)
+	coloredBlockReg = regexp.MustCompile(`\^\((#[a-fA-F0-9]{6}|[a-zA-Z0-9_]+)\)(.*?)\^`)
 )
 
 func RenderFormat(format string, vars map[string]string, palette *map[string]string) (string, error) {

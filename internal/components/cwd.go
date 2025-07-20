@@ -31,14 +31,14 @@ func (c *CwdComponent) Val() (string, error) {
 	return cwd, nil
 }
 
-func (c *CwdComponent) Render() (string, error) {
+func (c *CwdComponent) Render() (models.Result, error) {
 	utils.SetDefault(&c.Config.MaxLength, 3)
 	utils.SetDefault(&c.Config.Format, "{cwd}")
 	var format string = *c.Config.Format
 
 	val, err := c.Val()
 	if err != nil {
-		return "", err
+		return models.Result{Skip: true}, err
 	}
 
 	rendered, err := utils.RenderFormat(format, map[string]string{
@@ -46,17 +46,17 @@ func (c *CwdComponent) Render() (string, error) {
 	}, (*map[string]string)(&c.Palette))
 
 	if err != nil {
-		return "", err
+		return models.Result{Skip: true}, err
 	}
 
-	return rendered, nil
+	return models.Result{Value: rendered}, nil
 }
 
 func (c *CwdComponent) RenderAsync() <-chan models.Result {
 	ch := make(chan models.Result, 1)
 	go func() {
 		val, err := c.Render()
-		ch <- models.Result{Value: val, Error: err}
+		ch <- models.Result{Value: val.Value, Error: err}
 	}()
 	return ch
 }

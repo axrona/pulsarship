@@ -30,7 +30,7 @@ func findGitRoot(start string) (string, error) {
 	}
 }
 
-func (g *GitComponent) Val() (string, error) {
+func Status(g *GitComponent) (string, error) {
 	utils.SetDefault(&g.Config.CleanSuffix, "")
 	utils.SetDefault(&g.Config.UpToDate, " ^(#ff0000)[✓]^")
 	utils.SetDefault(&g.Config.Conflicted, " ^(#ff0000)[!?]^")
@@ -50,13 +50,6 @@ func (g *GitComponent) Val() (string, error) {
 		return "", nil
 	}
 
-	branchCmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
-	branchOut, err := branchCmd.Output()
-	if err != nil {
-		return "", nil
-	}
-	branch := strings.TrimSpace(string(branchOut))
-
 	counts := map[string]int{
 		"conflicted": 0,
 		"untracked":  0,
@@ -73,7 +66,7 @@ func (g *GitComponent) Val() (string, error) {
 	statusCmd := exec.Command("git", "status", "--porcelain", "--branch")
 	statusOut, err := statusCmd.Output()
 	if err != nil {
-		return branch, nil
+		return "", err
 	}
 	lines := strings.Split(string(statusOut), "\n")
 
@@ -148,32 +141,50 @@ func (g *GitComponent) Val() (string, error) {
 		if err != nil {
 			return "", err
 		}
-		return branch + suffix, nil
+		return suffix, nil
 	}
 
-	suffix := strings.Join(statusSymbols, " ")
-	return branch + suffix, nil
+	suffix := strings.Join(statusSymbols, "")
+	return suffix, nil
 }
 
-func (g *GitComponent) Render() (string, error) {
-	utils.SetDefault(&g.Config.Format, "^(#f2a971) {git}^")
-	val, err := g.Val()
+func (g *GitComponent) Val() (string, error) {
+	branchCmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
+	branchOut, err := branchCmd.Output()
 	if err != nil {
 		return "", err
 	}
+	branch := strings.TrimSpace(string(branchOut))
+
+	return branch, nil
+}
+
+func (g *GitComponent) Render() (models.Result, error) {
+	utils.SetDefault(&g.Config.Format, "^(#f2a971) {git}^")
+	val, err := g.Val()
+	if err != nil {
+		return models.Result{Skip: true}, err
+	}
+
+	status, err := Status(g)
+	if err != nil {
+		return models.Result{Skip: true}, err
+	}
 
 	rendered, err := utils.RenderFormat(*g.Config.Format, map[string]string{
-		"git": val,
+		"git":    val,
+		"branch": val,
+		"status": status,
 	}, (*map[string]string)(&g.Palette))
 
-	return rendered, err
+	return models.Result{Value: rendered}, err
 }
 
 func (g *GitComponent) RenderAsync() <-chan models.Result {
 	ch := make(chan models.Result, 1)
 	go func() {
 		val, err := g.Render()
-		ch <- models.Result{Value: val, Error: err}
+		ch <- models.Result{Value: val.Value, Error: err}
 	}()
 	return ch
 }

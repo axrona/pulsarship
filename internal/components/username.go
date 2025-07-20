@@ -24,13 +24,13 @@ func (u *UsernameComponent) Val() (string, error) {
 	return username.Name, nil
 }
 
-func (u *UsernameComponent) Render() (string, error) {
+func (u *UsernameComponent) Render() (models.Result, error) {
 	utils.SetDefault(&u.Config.Format, "{username}")
 	var format string = *u.Config.Format
 
 	val, err := u.Val()
 	if err != nil {
-		return "", err
+		return models.Result{Skip: true}, err
 	}
 
 	rendered, err := utils.RenderFormat(format, map[string]string{
@@ -38,17 +38,17 @@ func (u *UsernameComponent) Render() (string, error) {
 	}, (*map[string]string)(&u.Palette))
 
 	if err != nil {
-		return "", err
+		return models.Result{Skip: true}, err
 	}
 
-	return rendered, nil
+	return models.Result{Value: rendered}, nil
 }
 
 func (u *UsernameComponent) RenderAsync() <-chan models.Result {
 	ch := make(chan models.Result, 1)
 	go func() {
 		val, err := u.Render()
-		ch <- models.Result{Value: val, Error: err}
+		ch <- models.Result{Value: val.Value, Error: err}
 	}()
 	return ch
 }
