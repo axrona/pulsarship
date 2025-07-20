@@ -1,0 +1,25 @@
+name: Bug Report
+description: Report a reproducible bug
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Go version, shell etc.
+      placeholder: "e.g. Go 1.22, Fish"
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the bug clearly.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Please provide a minimal reproducible example.
