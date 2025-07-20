@@ -36,13 +36,13 @@ func (c *CwdComponent) Render() (string, error) {
 	utils.SetDefault(&c.Config.Format, "{cwd}")
 	var format string = *c.Config.Format
 
-	_, err := c.Val()
+	val, err := c.Val()
 	if err != nil {
 		return "", err
 	}
 
-	rendered, err := utils.RenderFormat(format, map[string]models.Component{
-		"cwd": c,
+	rendered, err := utils.RenderFormat(format, map[string]string{
+		"cwd": val,
 	}, (*map[string]string)(&c.Palette))
 
 	if err != nil {

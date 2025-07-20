@@ -28,8 +28,13 @@ func (h *HostnameComponent) Render() (string, error) {
 	utils.SetDefault(&h.Config.Format, "{hostname}")
 	var format string = *h.Config.Format
 
-	rendered, err := utils.RenderFormat(format, map[string]models.Component{
-		"hostname": h,
+	val, err := h.Val()
+	if err != nil {
+		return "", err
+	}
+
+	rendered, err := utils.RenderFormat(format, map[string]string{
+		"hostname": val,
 	}, (*map[string]string)(&h.Palette))
 
 	if err != nil {

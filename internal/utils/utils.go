@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
-
-	"github.com/xeyossr/pulsarship/internal/models"
 )
 
 // Create a pointer to a value of any type
@@ -72,7 +70,7 @@ var (
 	coloredBlockReg = regexp.MustCompile(`\^\((#[a-fA-F0-9]{6}|[a-zA-Z_]+)\)(.*?)\^`)
 )
 
-func RenderFormat(format string, components map[string]models.Component, palette *map[string]string) (string, error) {
+func RenderFormat(format string, vars map[string]string, palette *map[string]string) (string, error) {
 	var err error
 
 	result := coloredBlockReg.ReplaceAllStringFunc(format, func(match string) string {
@@ -92,12 +90,7 @@ func RenderFormat(format string, components map[string]models.Component, palette
 				return m
 			}
 			key := bracedVarRegex.FindStringSubmatch(m)[1]
-			if comp, ok := components[key]; ok {
-				var val string
-				val, err = comp.Val()
-				if err != nil {
-					return m
-				}
+			if val, ok := vars[key]; ok {
 				return val
 			}
 			return m
@@ -115,12 +108,7 @@ func RenderFormat(format string, components map[string]models.Component, palette
 			return m
 		}
 		key := bracedVarRegex.FindStringSubmatch(m)[1]
-		if comp, ok := components[key]; ok {
-			var val string
-			val, err = comp.Val()
-			if err != nil {
-				return m
-			}
+		if val, ok := vars[key]; ok {
 			return val
 		}
 		return m

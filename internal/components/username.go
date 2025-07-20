@@ -28,8 +28,13 @@ func (u *UsernameComponent) Render() (string, error) {
 	utils.SetDefault(&u.Config.Format, "{username}")
 	var format string = *u.Config.Format
 
-	rendered, err := utils.RenderFormat(format, map[string]models.Component{
-		"username": u,
+	val, err := u.Val()
+	if err != nil {
+		return "", err
+	}
+
+	rendered, err := utils.RenderFormat(format, map[string]string{
+		"username": val,
 	}, (*map[string]string)(&u.Palette))
 
 	if err != nil {

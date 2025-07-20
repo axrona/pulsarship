@@ -19,8 +19,13 @@ func (c *CharacterComponent) Render() (string, error) {
 	utils.SetDefault(&c.Config.Format, ">")
 	var format string = *c.Config.Format
 
-	rendered, err := utils.RenderFormat(format, map[string]models.Component{
-		"character": c,
+	val, err := c.Val()
+	if err != nil {
+		return "", err
+	}
+
+	rendered, err := utils.RenderFormat(format, map[string]string{
+		"character": val,
 	}, (*map[string]string)(&c.Palette))
 
 	if err != nil {

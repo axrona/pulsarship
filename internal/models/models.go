@@ -49,8 +49,18 @@ type CharacterConfig struct {
 
 type GitConfig struct {
 	Format      *string `toml:"format"`
-	DirtySuffix *string `toml:"dirty_suffix"`
 	CleanSuffix *string `toml:"clean_suffix"`
+	Conflicted  *string `toml:"conflicted"`
+	Ahead       *string `toml:"ahead"`
+	Behind      *string `toml:"behind"`
+	Diverged    *string `toml:"diverged"`
+	UpToDate    *string `toml:"up_to_date"`
+	Untracked   *string `toml:"untracked"`
+	Stashed     *string `toml:"stashed"`
+	Modified    *string `toml:"modified"`
+	Staged      *string `toml:"staged"`
+	Renamed     *string `toml:"renamed"`
+	Deleted     *string `toml:"deleted"`
 }
 
 type PaletteConfig map[string]string

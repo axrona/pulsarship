@@ -26,8 +26,13 @@ func (t *TimeComponent) Render() (string, error) {
 	utils.SetDefault(&t.Config.Format, "{time}")
 	var format string = *t.Config.Format
 
-	rendered, err := utils.RenderFormat(format, map[string]models.Component{
-		"time": t,
+	val, err := t.Val()
+	if err != nil {
+		return "", err
+	}
+
+	rendered, err := utils.RenderFormat(format, map[string]string{
+		"time": val,
 	}, (*map[string]string)(&t.Palette))
 
 	if err != nil {
