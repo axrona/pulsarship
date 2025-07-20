@@ -3,7 +3,7 @@
 <div align="center">
 
 <!-- Badges -->
-[![License: MIT](https://img.shields.io/github/license/xeyossr/pulsarship?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](https://github.com/xeyossr/pulsarship/blob/main/LICENSE)
+[![License: GPL3](https://img.shields.io/github/license/xeyossr/pulsarship?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](https://github.com/xeyossr/pulsarship/blob/main/LICENSE)
 [![Go Version](https://img.shields.io/badge/Go-1.24+-blue?style=for-the-badge&logo=go&logoColor=white)](https://golang.org/dl/)
 [![Project Status](https://img.shields.io/badge/status-pre--release-orange?style=for-the-badge&logo=git&logoColor=white)](https://github.com/xeyossr/pulsarship/issues)
 [![Platform](https://img.shields.io/badge/platform-Linux-lightgrey?style=for-the-badge&logo=linux&logoColor=white)](https://www.kernel.org/)
@@ -67,55 +67,8 @@ eval "$(pulsarship init bash)"
 > `source ~/.config/fish/config.fish` or `source ~/.bashrc` or `source ~/.zshrc`
 
 ## 🛠 Configuration
-Pulsarship uses a TOML-based configuration file:
-```ini
-prompt = '''
-
-{username}@{hostname}: {cwd}  {git}
-{character} '''
-
-[character]
-icon = ">"
-format = "^(peach){character}^"
-
-[hostname]
-color = "mauve"
-format = "^(mauve){hostname}^"
-
-[username]
-format = "^(sky){username}^"
-
-[cwd]
-format = "^(lavender){cwd}^"
-max_length = 3
-
-[git]
-format = "^(yellow) {git}^"
-clean_suffix = ""
-conflicted = '🏳'
-ahead = ' ⇡'
-behind = ' ⇣'
-diverged = ' ⇕'
-up_to_date = ' ✔'
-untracked = ' ?'
-stashed = ' ⧉'
-modified = ' ✎'
-staged = ' ^(green)[++{count}]'
-renamed = ' »'
-deleted = ' ✖'
-staged = ' ^(green)[++{count}]^'
-
-[palette]
-yellow = "#f9e2af"
-red = "#f38ba8"
-peach = "#fab387"
-lavender = "#b4befe"
-sky = "#89dceb"
-mauve = "#cba6f7"
-green = "#a6e3a1"
-```
-
-➡️ For more, check out the [Wiki](Wiki) (coming soon)
+💡 Want to tweak the colors, layout, or modules?  
+Head over to the [Wiki](https://github.com/xeyossr/pulsarship/wiki) to explore usage examples, detailed config guides, and tips on getting the most out of Pulsarship.
 
 ## 🚧 Roadmap
 - [x] Basic prompt rendering
@@ -135,4 +88,4 @@ Found a bug or have a suggestion? [Open an issue](https://github.com/xeyossr/pul
 
 ## 📜 License
 This project is licensed under the **GNU General Public License v3.0.**
-See the **[LICENSE](LICENSE)** file for details.
+See the [LICENSE](LICENSE) file for details.
