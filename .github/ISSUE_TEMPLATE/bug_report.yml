@@ -1,5 +1,5 @@
-name: Bug Report
-description: Report a reproducible bug
+name: 🐛 Bug Report
+description: Report a bug or malfunction
 title: "[Bug] "
 labels: [bug]
 body:
@@ -7,19 +7,30 @@ body:
     id: environment
     attributes:
       label: Environment
-      description: Go version, shell etc.
-      placeholder: "e.g. Go 1.22, Fish"
+      description: Go version, shell type, OS
+      placeholder: "e.g. Go 1.22, zsh, Linux"
     validations:
       required: true
   - type: textarea
     id: what-happened
     attributes:
-      label: What happened?
-      description: Describe the bug clearly.
+      label: What Happened?
+      description: Clearly describe the bug and what you expected to happen.
     validations:
       required: true
   - type: textarea
     id: steps
     attributes:
       label: Steps to Reproduce
-      description: Please provide a minimal reproducible example.
+      description: List the exact steps to reproduce the issue.
+      placeholder: |
+        1. Run `pulsarship`
+        2. Enable X module
+        3. See incorrect output
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Output / Logs
+      description: Share error messages or screenshots, if any.
