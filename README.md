@@ -14,7 +14,7 @@
 
 **🚀 Pulsarship** is a minimal, fast and customizable shell prompt tool written in Go.
 
-[✨ Features](#features) · [📦 Installation](#installation) · [🔧 Shell Config](#add-to-your-shell-config) · [🛠 Configuration](#configuration) · [🚧 Roadmap](#roadmap) · [📜 License](#license)
+[✨ Features](#-features) · [📦 Installation](#-installation) · [🔧 Shell Config](#-add-to-your-shell-config) · [🛠 Configuration](#-configuration) · [🚧 Roadmap](#-roadmap) · [📜 License](#-license)
 
 </div>
 
