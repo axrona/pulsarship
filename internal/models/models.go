@@ -21,6 +21,7 @@ type PromptConfig struct {
 	Time      TimeConfig      `toml:"time"`
 	Character CharacterConfig `toml:"character"`
 	Palette   PaletteConfig   `toml:"palette"`
+	Git       GitConfig       `toml:"git"`
 }
 
 type HostnameConfig struct {
@@ -44,6 +45,12 @@ type TimeConfig struct {
 type CharacterConfig struct {
 	Icon   *string `toml:"icon"`
 	Format *string `toml:"format"`
+}
+
+type GitConfig struct {
+	Format      *string `toml:"format"`
+	DirtySuffix *string `toml:"dirty_suffix"`
+	CleanSuffix *string `toml:"clean_suffix"`
 }
 
 type PaletteConfig map[string]string

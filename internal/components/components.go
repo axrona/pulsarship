@@ -10,5 +10,6 @@ func BuildComponentMap(config models.PromptConfig) map[string]models.Component {
 		"cwd":       &CwdComponent{Config: config.Cwd, Palette: config.Palette},
 		"time":      &TimeComponent{Config: config.Time, Palette: config.Palette},
 		"character": &CharacterComponent{Config: config.Character, Palette: config.Palette},
+		"git":       &GitComponent{Config: config.Git, Palette: config.Palette},
 	}
 }
