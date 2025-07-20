@@ -91,8 +91,19 @@ max_length = 3
 
 [git]
 format = "^(yellow) {git}^"
-dirty_suffix = " ^(red)[*]^"
 clean_suffix = ""
+conflicted = '🏳'
+ahead = ' ⇡'
+behind = ' ⇣'
+diverged = ' ⇕'
+up_to_date = ' ✔'
+untracked = ' ?'
+stashed = ' ⧉'
+modified = ' ✎'
+staged = ' ^(green)[++{count}]'
+renamed = ' »'
+deleted = ' ✖'
+staged = ' ^(green)[++{count}]^'
 
 [palette]
 yellow = "#f9e2af"
@@ -101,6 +112,7 @@ peach = "#fab387"
 lavender = "#b4befe"
 sky = "#89dceb"
 mauve = "#cba6f7"
+green = "#a6e3a1"
 ```
 
 ➡️ For more, check out the [Wiki](Wiki) (coming soon)
