@@ -32,49 +32,138 @@ func findGitRoot(start string) (string, error) {
 
 func (g *GitComponent) Val() (string, error) {
 	utils.SetDefault(&g.Config.CleanSuffix, "")
-	utils.SetDefault(&g.Config.DirtySuffix, " ^(#F38BA8)[*]^")
+	utils.SetDefault(&g.Config.UpToDate, " ^(#ff0000)[✓]^")
+	utils.SetDefault(&g.Config.Conflicted, " ^(#ff0000)[!?]^")
+	utils.SetDefault(&g.Config.Ahead, " ^(#ff0000)[↑+]^")
+	utils.SetDefault(&g.Config.Behind, " ^(#ff0000)[↓-]^")
+	utils.SetDefault(&g.Config.Diverged, " ^(#ff0000)[⇅!?]^")
+	utils.SetDefault(&g.Config.Untracked, " ^(#ff0000)[?{count}]^")
+	utils.SetDefault(&g.Config.Stashed, " ^(#ff0000)[S{count}]^")
+	utils.SetDefault(&g.Config.Modified, " ^(#ff0000)[M{count}]^")
+	utils.SetDefault(&g.Config.Staged, " ^(#ff0000)[+{count}]^")
+	utils.SetDefault(&g.Config.Renamed, " ^(#ff0000)[R{count}]^")
+	utils.SetDefault(&g.Config.Deleted, " ^(#ff0000)[X{count}]^")
+
 	cwd, _ := os.Getwd()
 	_, err := findGitRoot(cwd)
 	if err != nil {
 		return "", nil
 	}
 
-	cmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
-	out, err := cmd.Output()
+	branchCmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
+	branchOut, err := branchCmd.Output()
 	if err != nil {
 		return "", nil
 	}
-	branch := strings.TrimSpace(string(out))
+	branch := strings.TrimSpace(string(branchOut))
 
-	statusCmd := exec.Command("git", "status", "--porcelain")
+	counts := map[string]int{
+		"conflicted": 0,
+		"untracked":  0,
+		"modified":   0,
+		"staged":     0,
+		"renamed":    0,
+		"deleted":    0,
+		"stashed":    0,
+		"ahead":      0,
+		"behind":     0,
+		"diverged":   0,
+	}
+
+	statusCmd := exec.Command("git", "status", "--porcelain", "--branch")
 	statusOut, err := statusCmd.Output()
 	if err != nil {
 		return branch, nil
 	}
-	clean := strings.TrimSpace(string(statusOut)) == ""
-	var suffix string
-	if clean {
-		suffix, err = utils.RenderFormat(*g.Config.CleanSuffix, map[string]models.Component{}, (*map[string]string)(&g.Palette))
-	} else {
-		suffix, err = utils.RenderFormat(*g.Config.DirtySuffix, map[string]models.Component{}, (*map[string]string)(&g.Palette))
+	lines := strings.Split(string(statusOut), "\n")
+
+	var statusSymbols []string
+
+	for _, line := range lines {
+		if strings.HasPrefix(line, "##") {
+			if strings.Contains(line, "ahead") && strings.Contains(line, "behind") {
+				counts["diverged"]++
+			} else if strings.Contains(line, "ahead") {
+				counts["ahead"]++
+			} else if strings.Contains(line, "behind") {
+				counts["behind"]++
+			}
+			continue
+		}
+
+		code := strings.TrimSpace(line)
+		if code == "" {
+			continue
+		}
+
+		switch {
+		case strings.HasPrefix(code, "UU"):
+			counts["conflicted"]++
+		case strings.HasPrefix(code, "??"):
+			counts["untracked"]++
+		case strings.HasPrefix(code, "M "), strings.HasPrefix(code, " M"):
+			counts["modified"]++
+		case strings.HasPrefix(code, "A "), strings.HasPrefix(code, "AM"):
+			counts["staged"]++
+		case strings.HasPrefix(code, "R "):
+			counts["renamed"]++
+		case strings.HasPrefix(code, "D "), strings.HasPrefix(code, " D"):
+			counts["deleted"]++
+		}
 	}
 
-	if err != nil {
-		return "", err
+	stashCmd := exec.Command("git", "stash", "list")
+	stashOut, err := stashCmd.Output()
+	if err == nil && strings.TrimSpace(string(stashOut)) != "" {
+		counts["stashed"] = len(strings.Split(strings.TrimSpace(string(stashOut)), "\n"))
 	}
 
+	types := map[string]*string{
+		"conflicted": g.Config.Conflicted,
+		"untracked":  g.Config.Untracked,
+		"modified":   g.Config.Modified,
+		"staged":     g.Config.Staged,
+		"renamed":    g.Config.Renamed,
+		"deleted":    g.Config.Deleted,
+		"stashed":    g.Config.Stashed,
+		"ahead":      g.Config.Ahead,
+		"behind":     g.Config.Behind,
+		"diverged":   g.Config.Diverged,
+	}
+
+	for key, val := range types {
+		if counts[key] > 0 {
+			formatted, err := utils.RenderFormat(*val, map[string]string{
+				"count": fmt.Sprintf("%d", counts[key]),
+			}, (*map[string]string)(&g.Palette))
+			if err != nil {
+				return "", err
+			}
+			statusSymbols = append(statusSymbols, formatted)
+		}
+	}
+
+	if len(statusSymbols) == 0 {
+		suffix, err := utils.RenderFormat(*g.Config.CleanSuffix, map[string]string{}, (*map[string]string)(&g.Palette))
+		if err != nil {
+			return "", err
+		}
+		return branch + suffix, nil
+	}
+
+	suffix := strings.Join(statusSymbols, " ")
 	return branch + suffix, nil
 }
 
 func (g *GitComponent) Render() (string, error) {
 	utils.SetDefault(&g.Config.Format, "^(#f2a971) {git}^")
 	val, err := g.Val()
-	if err != nil || val == "" {
+	if err != nil {
 		return "", err
 	}
 
-	rendered, err := utils.RenderFormat(*g.Config.Format, map[string]models.Component{
-		"git": g,
+	rendered, err := utils.RenderFormat(*g.Config.Format, map[string]string{
+		"git": val,
 	}, (*map[string]string)(&g.Palette))
 
 	return rendered, err
