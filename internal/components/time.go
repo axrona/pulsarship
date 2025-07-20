@@ -1,0 +1,51 @@
+package components
+
+import (
+	"time"
+
+	"github.com/xeyossr/pulsarship/internal/models"
+	"github.com/xeyossr/pulsarship/internal/utils"
+)
+
+type TimeComponent struct {
+	Config  models.TimeConfig
+	Palette models.PaletteConfig
+}
+
+func (t *TimeComponent) Val() (string, error) {
+	currentTime := time.Now().Format(*t.Config.TimeFormat)
+	if currentTime == "" {
+		return "", nil
+	}
+
+	return currentTime, nil
+}
+
+func (t *TimeComponent) Render() (string, error) {
+	utils.SetDefault(&t.Config.TimeFormat, "15:04:05")
+	utils.SetDefault(&t.Config.Format, "{time}")
+	var format string = *t.Config.Format
+
+	rendered, err := utils.RenderFormat(format, map[string]models.Component{
+		"time": t,
+	}, (*map[string]string)(&t.Palette))
+
+	if err != nil {
+		return "", err
+	}
+
+	return rendered, nil
+}
+
+func (t *TimeComponent) RenderAsync() <-chan models.Result {
+	ch := make(chan models.Result, 1)
+	go func() {
+		val, err := t.Render()
+		ch <- models.Result{Value: val, Error: err}
+	}()
+	return ch
+}
+
+func (t TimeComponent) Name() string {
+	return "time"
+}
