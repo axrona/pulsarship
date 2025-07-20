@@ -9,26 +9,17 @@
 [![Platform](https://img.shields.io/badge/platform-Linux-lightgrey?style=for-the-badge&logo=linux&logoColor=white)](https://www.kernel.org/)
 [![Development](https://img.shields.io/badge/development-active-brightgreen?style=for-the-badge&logo=github&logoColor=white)](https://github.com/xeyossr/pulsarship/graphs/commit-activity)
 
-</div>
 
 ---
 
 **🚀 Pulsarship** is a minimal, fast and customizable shell prompt tool written in Go.
 
-> ⚠️ **Note:** Pulsarship is in **active development**. Breaking changes are expected. If development stops, this section and the badge above will reflect it.
+[✨ Features](#features) · [📦 Installation](#installation) · [🔧 Shell Config](#add-to-your-shell-config) · [🛠 Configuration](#configuration) · [🚧 Roadmap](#roadmap) · [📜 License](#license)
+
+</div>
 
 ---
-
-## 📑 Table of Contents
-
-- [✨ Features](#✨-features)
-- [📦 Installation](#📦-installation)
-- [🔧 Add to your shell config](#🔧-add-to-your-shell-config)
-- [🛠 Configuration](#🛠-configuration)
-- [🚧 Roadmap](#🚧-roadmap)
-- [📜 License](#📜-license)
-
----
+> ⚠️ Note: Pulsarship is still under development. Until the first stable release, it is not recommended for daily use.
 
 ## ✨ Features
 
