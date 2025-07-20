@@ -1,0 +1,19 @@
+name: 💬 Ask for Help
+description: Need help or clarification? Ask here.
+title: "[Help] "
+labels: [question]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: What do you need help with?
+      description: Clearly state your question or what you're trying to do.
+      placeholder: "I'm not sure how to configure [...]"
+    validations:
+      required: true
+  - type: textarea
+    id: what-tried
+    attributes:
+      label: What have you tried?
+      description: Let us know what you’ve already done or looked into.
+      placeholder: "I've read the docs, tried [...]"
