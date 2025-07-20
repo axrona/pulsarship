@@ -71,9 +71,9 @@ The default config file location is `~/.config/pulsarship/pulsarship.toml`
 
 Pulsarship uses TOML-based configuration:
 ```toml
-prompt = ```
+prompt = '''
 {cwd} 
-{character} ```
+{character} '''
 
 [cwd]
 format = "^(lavender)[{cwd}]^"
