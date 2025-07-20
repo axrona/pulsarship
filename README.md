@@ -63,7 +63,6 @@ export PULSARSHIP_CONFIG="$HOME/.config/pulsarship/pulsarship.toml"
 eval "$(pulsarship init bash)"
 ```
 
-
 > Make sure to restart your shell or source the config file after editing:
 > `source ~/.config/fish/config.fish` or `source ~/.bashrc` or `source ~/.zshrc`
 
@@ -71,7 +70,8 @@ eval "$(pulsarship init bash)"
 Pulsarship uses a TOML-based configuration file:
 ```ini
 prompt = '''
-{username}@{hostname}: {cwd}
+
+{username}@{hostname}: {cwd}  {git}
 {character} '''
 
 [character]
@@ -89,7 +89,14 @@ format = "^(sky){username}^"
 format = "^(lavender){cwd}^"
 max_length = 3
 
+[git]
+format = "^(yellow) {git}^"
+dirty_suffix = " ^(red)[*]^"
+clean_suffix = ""
+
 [palette]
+yellow = "#f9e2af"
+red = "#f38ba8"
 peach = "#fab387"
 lavender = "#b4befe"
 sky = "#89dceb"
@@ -104,10 +111,15 @@ mauve = "#cba6f7"
 - [x] Color palette mapping
 - [x] Async component rendering
 - [ ] Right prompt support
-- [ ] Components for Git, Python, and Ruby environments (e.g. virtualenv, rbenv, git branch/status)
 - [ ] AUR packaging and support for Arch-based systems
 - [ ] Support for writing custom user-defined modules
 - [ ] Performance improvements and further optimizations
+
+## 🤝 Contributing
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+## 🐞 Reporting Issues
+Found a bug or have a suggestion? [Open an issue](https://github.com/xeyossr/pulsarship/issues). Be concise and include any relevant output or screenshots.
 
 ## 📜 License
 This project is licensed under the **GNU General Public License v3.0.**
