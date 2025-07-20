@@ -1,0 +1,30 @@
+name: 🌟 Feature Request
+description: Suggest an idea or improvement for the prompt
+title: "[Feature] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Is your feature request related to a problem? Describe what and why.
+      placeholder: "I often find it difficult to [...]"
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Clearly explain what you want to happen and why it's useful.
+      placeholder: "I'd like the prompt to support [...]"
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered other solutions or workarounds?
+      placeholder: "I've also thought about [...]"
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Add any other relevant info or mockups.
