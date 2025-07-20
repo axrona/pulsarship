@@ -14,7 +14,7 @@
 
 **🚀 Pulsarship** is a minimal, fast and customizable shell prompt tool written in Go.
 
-[✨ Features](#-features) · [📦 Installation](#-installation) · [🔧 Shell Config](#-add-to-your-shell-config) · [🛠 Configuration](#-configuration) · [🚧 Roadmap](#-roadmap) · [📜 License](#-license)
+[✨ Features](#-features) • [📦 Installation](#-installation) • [🔧 Shell Config](#-add-to-your-shell-config) • [🛠 Configuration](#-configuration) • [🚧 Roadmap](#-roadmap) • [📜 License](#-license)
 
 </div>
 
@@ -42,30 +42,30 @@ make install
 ```
 
 ### 🔧 Add to your shell config
+Add the following to your `~/.config/fish/config.fish`:
 **Fish:**
 ```bash
-function fish_prompt
-    /usr/bin/pulsarship
-end
-
-funcsave fish_prompt
-```
-
-**Bash:**
-Add the following to your `~/.bashrc`:
-```bash
-PS1="$(/usr/bin/pulsarship)"
+set -Ux PULSARSHIP_CONFIG ~/.config/pulsarship/pulsarship.toml
+pulsarship init fish | source
 ```
 
 **Zsh:**
 Add the following to your `~/.zshrc`:
 ```zsh
-PROMPT="$(/usr/bin/pulsarship)"
+export PULSARSHIP_CONFIG="$HOME/.config/pulsarship/pulsarship.toml"
+eval "$(pulsarship init zsh)"
 ```
 
+**Bash:**
+Add the following to your `~/.bashrc`:
+```bash
+export PULSARSHIP_CONFIG="$HOME/.config/pulsarship/pulsarship.toml"
+eval "$(pulsarship init bash)"
+```
+
+
 > Make sure to restart your shell or source the config file after editing:
->
-> `source ~/.bashrc` or `source ~/.zshrc`
+> `source ~/.config/fish/config.fish` or `source ~/.bashrc` or `source ~/.zshrc`
 
 ## 🛠 Configuration
 Pulsarship uses a TOML-based configuration file:
@@ -104,8 +104,6 @@ mauve = "#cba6f7"
 - [x] Color palette mapping
 - [x] Async component rendering
 - [ ] Right prompt support
-- [ ] Custom shell integration examples
-- [ ] Prebuilt binaries
 - [ ] Components for Git, Python, and Ruby environments (e.g. virtualenv, rbenv, git branch/status)
 - [ ] AUR packaging and support for Arch-based systems
 - [ ] Support for writing custom user-defined modules

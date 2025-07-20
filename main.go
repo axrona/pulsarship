@@ -1,15 +1,16 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"io"
 	"os"
 	"path/filepath"
 	"strings"
 
+	"github.com/spf13/cobra"
 	"github.com/xeyossr/pulsarship/internal/components"
 	cfg "github.com/xeyossr/pulsarship/internal/config"
+	initShell "github.com/xeyossr/pulsarship/internal/init"
 )
 
 func expandPath(path string) string {
@@ -20,8 +21,20 @@ func expandPath(path string) string {
 	return path
 }
 
+func getConfigPath(configFlag string) string {
+	if configFlag != "" {
+		return expandPath(configFlag)
+	}
+
+	if envPath := os.Getenv("PULSARSHIP_CONFIG"); envPath != "" {
+		return expandPath(envPath)
+	}
+
+	home := os.Getenv("HOME")
+	return filepath.Join(home, ".config", "pulsarship", "pulsarship.toml")
+}
+
 func Run(path string, out io.Writer) error {
-	path = expandPath(path)
 	configData, err := cfg.ParseConfig(path)
 	if err != nil {
 		return fmt.Errorf("could not parse config: %w", err)
@@ -36,14 +49,66 @@ func Run(path string, out io.Writer) error {
 	return nil
 }
 
+var configFlag string
+
 func main() {
-	defaultConfigFile := "pulsarship.toml"
-	defaultConfigPath := filepath.Join(os.Getenv("HOME"), ".config", "pulsarship", defaultConfigFile)
+	var rootCmd = &cobra.Command{
+		Use:   "pulsarship",
+		Short: "🚀 The minimal, fast, and customizable shell prompt. ☄🌌️",
+		Long:  "Pulsarship is a minimal, fast, and customizable prompt written in Go.",
+	}
 
-	configPath := flag.String("config", defaultConfigPath, "Custom path to pulsarship.toml")
-	flag.Parse()
+	rootCmd.PersistentFlags().StringVarP(&configFlag, "config", "c", "", "Path to the config file")
 
-	if err := Run(*configPath, os.Stdout); err != nil {
+	var initCmd = &cobra.Command{
+		Use:   "init",
+		Short: "Prints the shell function used to execute pulsarship",
+	}
+
+	var promptCmd = &cobra.Command{
+		Use:   "prompt",
+		Short: "",
+		Run: func(cmd *cobra.Command, args []string) {
+			path := getConfigPath(configFlag)
+			err := Run(path, os.Stdout)
+			if err != nil {
+				fmt.Fprintln(os.Stderr, "Error:", err)
+				os.Exit(1)
+			}
+		},
+	}
+
+	var initBashCmd = &cobra.Command{
+		Use:   "bash",
+		Short: "Prints Bash init script",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println(initShell.BashInit())
+		},
+	}
+
+	var initZshCmd = &cobra.Command{
+		Use:   "zsh",
+		Short: "Prints Zsh init script",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println(initShell.ZshInit())
+		},
+	}
+
+	var initFishCmd = &cobra.Command{
+		Use:   "fish",
+		Short: "Prints Fish init script",
+		Run: func(cmd *cobra.Command, args []string) {
+			fmt.Println(initShell.FishInit())
+		},
+	}
+
+	initCmd.AddCommand(initBashCmd)
+	initCmd.AddCommand(initZshCmd)
+	initCmd.AddCommand(initFishCmd)
+	rootCmd.AddCommand(initCmd)
+	rootCmd.AddCommand(promptCmd)
+
+	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, "Error:", err)
 		os.Exit(1)
 	}
