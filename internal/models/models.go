@@ -14,7 +14,8 @@ type Result struct {
 }
 
 type PromptConfig struct {
-	Prompt string `toml:"prompt"`
+	Prompt     string `toml:"prompt"`
+	AddNewLine bool   `toml:"add_newline"`
 
 	Hostname  HostnameConfig  `toml:"hostname"`
 	Username  UsernameConfig  `toml:"username"`
