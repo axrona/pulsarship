@@ -25,9 +25,8 @@
 
 - ⚙️ **Modular architecture** – Easily customize each part of the prompt
 - 🎨 **Color palette support** – Define theme colors using `palette` and reference them in components
-- 🧩 **Components** – Includes built-in components like:
-  - `cwd`, `username`, `hostname`, `character`, `time` 
-  - with more planned in the future.
+- 🧩 **Components** – Includes built-in components such as:
+  - `cwd`, `username`, `hostname`, `character`, `time`, `git`, and more
 - ⚡ **Blazing fast** – Lightweight Go binary with minimal memory usage
 - 🧪 **Extensible** – Future support planned for right prompt, custom modules, async updates
 
@@ -74,6 +73,8 @@ Pulsarship uses TOML-based configuration:
 prompt = '''
 {cwd} 
 {character} '''
+
+add_newline = true
 
 [cwd]
 format = "^(lavender)[{cwd}]^"
