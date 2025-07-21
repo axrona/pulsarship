@@ -33,7 +33,18 @@
 ---
 
 ## 📦 Installation
+### 🔁 AUR (Arch Linux / Manjaro / EndeavourOS)
 
+If you're using an Arch-based distribution, you can install `pulsarship` from the AUR using an AUR helper like [`yay`](https://github.com/Jguer/yay) or [`paru`](https://github.com/Morganamilo/paru):
+```bash
+yay -S pulsarship
+```
+or
+```bash
+paru -S pulsarship
+```
+
+### 🛠️ Manual Installation
 ```bash
 git clone https://github.com/xeyossr/pulsarship
 cd pulsarship
@@ -62,7 +73,7 @@ export PULSARSHIP_CONFIG="$HOME/.config/pulsarship/pulsarship.toml"
 eval "$(pulsarship init bash)"
 ```
 
-> Make sure to restart your shell or source the config file after editing:
+> Make sure to restart your shell or source the config file after editing:   
 > `source ~/.config/fish/config.fish` or `source ~/.bashrc` or `source ~/.zshrc`
 
 ## 🛠 Configuration
