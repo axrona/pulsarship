@@ -6,7 +6,9 @@ import (
 )
 
 var DefaultConfig = models.PromptConfig{
-	Prompt: "{cwd}  {git}\n{character} ",
+	Prompt:     "{cwd}  {git}\n{character} ",
+	AddNewLine: true,
+
 	Hostname: models.HostnameConfig{
 		Format: nil,
 	},
