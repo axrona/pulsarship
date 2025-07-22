@@ -10,6 +10,15 @@ type CharacterComponent struct {
 	Palette models.PaletteConfig
 }
 
+func init() {
+	Registry["character"] = func(config models.PromptConfig) models.Component {
+		return &CharacterComponent{
+			Config:  config.Character,
+			Palette: config.Palette,
+		}
+	}
+}
+
 func (c *CharacterComponent) Val() (string, error) {
 	return *c.Config.Icon, nil
 }

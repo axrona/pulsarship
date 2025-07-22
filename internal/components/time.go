@@ -12,6 +12,15 @@ type TimeComponent struct {
 	Palette models.PaletteConfig
 }
 
+func init() {
+	Registry["time"] = func(config models.PromptConfig) models.Component {
+		return &TimeComponent{
+			Config:  config.Time,
+			Palette: config.Palette,
+		}
+	}
+}
+
 func (t *TimeComponent) Val() (string, error) {
 	currentTime := time.Now().Format(*t.Config.TimeFormat)
 	if currentTime == "" {

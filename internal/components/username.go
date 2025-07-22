@@ -12,6 +12,15 @@ type UsernameComponent struct {
 	Palette models.PaletteConfig
 }
 
+func init() {
+	Registry["username"] = func(config models.PromptConfig) models.Component {
+		return &UsernameComponent{
+			Config:  config.Username,
+			Palette: config.Palette,
+		}
+	}
+}
+
 func (u *UsernameComponent) Val() (string, error) {
 	username, err := user.Current()
 	if err != nil {

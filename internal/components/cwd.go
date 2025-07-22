@@ -13,6 +13,15 @@ type CwdComponent struct {
 	Palette models.PaletteConfig
 }
 
+func init() {
+	Registry["cwd"] = func(config models.PromptConfig) models.Component {
+		return &CwdComponent{
+			Config:  config.Cwd,
+			Palette: config.Palette,
+		}
+	}
+}
+
 func (c *CwdComponent) Val() (string, error) {
 	cwd, err := os.Getwd()
 	if err != nil {

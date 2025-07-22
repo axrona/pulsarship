@@ -12,6 +12,15 @@ type HostnameComponent struct {
 	Palette models.PaletteConfig
 }
 
+func init() {
+	Registry["hostname"] = func(config models.PromptConfig) models.Component {
+		return &HostnameComponent{
+			Config:  config.Hostname,
+			Palette: config.Palette,
+		}
+	}
+}
+
 func (h *HostnameComponent) Val() (string, error) {
 	hostname, err := os.Hostname()
 	if err != nil {
