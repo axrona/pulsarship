@@ -5,10 +5,11 @@ import (
 	"os"
 
 	"github.com/xeyossr/pulsarship/internal/cli"
+	"github.com/xeyossr/pulsarship/internal/cli/flags"
 )
 
 func main() {
-	cli.RootCmd.PersistentFlags().StringVarP(&cli.ConfigFlag, "config", "c", "", "Path to the config file")
+	cli.RootCmd.PersistentFlags().StringVarP(&flags.ConfigFlag, "config", "c", "", "Path to the config file")
 
 	cli.InitCmd.AddCommand(cli.InitBashCmd)
 	cli.InitCmd.AddCommand(cli.InitZshCmd)

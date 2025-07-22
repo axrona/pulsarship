@@ -1,3 +1,3 @@
-package cli
+package flags
 
 var ConfigFlag string

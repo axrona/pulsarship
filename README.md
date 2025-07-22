@@ -109,9 +109,8 @@ For more information visit the [Wiki](https://github.com/xeyossr/pulsarship/wiki
 - [x] Color palette mapping
 - [x] Async component rendering
 - [x] Support for writing custom user-defined modules
+- [x] AUR packaging and support for Arch-based systems
 - [ ] Right prompt support
-- [ ] AUR packaging and support for Arch-based systems
-- [ ] Performance improvements and further optimizations
 
 ## 🤝 Contributing
 Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
