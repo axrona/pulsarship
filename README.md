@@ -27,6 +27,7 @@
 - 🎨 **Color palette support** – Define theme colors using `palette` and reference them in components
 - 🧩 **Components** – Includes built-in components such as:
   - `cwd`, `username`, `hostname`, `character`, `time`, `git`, and more
+- 🧰 **Custom components** – Define your own modules using simple config + shell scripts
 - ⚡ **Blazing fast** – Lightweight Go binary with minimal memory usage
 - 🧪 **Extensible** – Future support planned for right prompt, custom modules, async updates
 
@@ -107,9 +108,9 @@ For more information visit the [Wiki](https://github.com/xeyossr/pulsarship/wiki
 - [x] Component system
 - [x] Color palette mapping
 - [x] Async component rendering
+- [x] Support for writing custom user-defined modules
 - [ ] Right prompt support
 - [ ] AUR packaging and support for Arch-based systems
-- [ ] Support for writing custom user-defined modules
 - [ ] Performance improvements and further optimizations
 
 ## 🤝 Contributing
