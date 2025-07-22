@@ -16,6 +16,15 @@ type GitComponent struct {
 	Palette models.PaletteConfig
 }
 
+func init() {
+	Registry["git"] = func(config models.PromptConfig) models.Component {
+		return &GitComponent{
+			Config:  config.Git,
+			Palette: config.Palette,
+		}
+	}
+}
+
 func findGitRoot(start string) (string, error) {
 	dir := start
 	for {

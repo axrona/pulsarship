@@ -17,13 +17,14 @@ type PromptConfig struct {
 	Prompt     string `toml:"prompt"`
 	AddNewLine bool   `toml:"add_newline"`
 
-	Hostname  HostnameConfig  `toml:"hostname"`
-	Username  UsernameConfig  `toml:"username"`
-	Cwd       CwdConfig       `toml:"cwd"`
-	Time      TimeConfig      `toml:"time"`
-	Character CharacterConfig `toml:"character"`
-	Palette   PaletteConfig   `toml:"palette"`
-	Git       GitConfig       `toml:"git"`
+	Custom    map[string]CustomComponentConfig `toml:"custom"`
+	Hostname  HostnameConfig                   `toml:"hostname"`
+	Username  UsernameConfig                   `toml:"username"`
+	Cwd       CwdConfig                        `toml:"cwd"`
+	Time      TimeConfig                       `toml:"time"`
+	Character CharacterConfig                  `toml:"character"`
+	Palette   PaletteConfig                    `toml:"palette"`
+	Git       GitConfig                        `toml:"git"`
 }
 
 type HostnameConfig struct {
@@ -47,6 +48,11 @@ type TimeConfig struct {
 type CharacterConfig struct {
 	Icon   *string `toml:"icon"`
 	Format *string `toml:"format"`
+}
+
+type CustomComponentConfig struct {
+	Format *string `toml:"format"`
+	Run    *string `toml:"run"`
 }
 
 type GitConfig struct {
