@@ -2,6 +2,8 @@ package init
 
 func BashInit() string {
 	return `
+export PULSARSHIP_SHELL="bash"
+
 __pulsarship_prompt() {
     PS1="$(/usr/bin/pulsarship prompt)"
 }
