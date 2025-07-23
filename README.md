@@ -5,21 +5,17 @@
 <!-- Badges -->
 [![License: GPL3](https://img.shields.io/github/license/xeyossr/pulsarship?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](https://github.com/xeyossr/pulsarship/blob/main/LICENSE)
 [![Go Version](https://img.shields.io/badge/Go-1.24+-blue?style=for-the-badge&logo=go&logoColor=white)](https://golang.org/dl/)
-[![Project Status](https://img.shields.io/badge/status-pre--release-orange?style=for-the-badge&logo=git&logoColor=white)](https://github.com/xeyossr/pulsarship/issues)
+[![Release](https://img.shields.io/github/v/release/xeyossr/pulsarship?style=for-the-badge&logo=github&logoColor=white)](https://github.com/xeyossr/pulsarship/releases/latest)
 [![Platform](https://img.shields.io/badge/platform-Linux-lightgrey?style=for-the-badge&logo=linux&logoColor=white)](https://www.kernel.org/)
 [![Development](https://img.shields.io/badge/development-active-brightgreen?style=for-the-badge&logo=github&logoColor=white)](https://github.com/xeyossr/pulsarship/graphs/commit-activity)
-
 
 ---
 
 **🚀 Pulsarship** is a minimal, fast and customizable shell prompt tool written in Go.
 
-[✨ Features](#-features) • [📦 Installation](#-installation) • [🔧 Shell Config](#-add-to-your-shell-config) • [🛠 Configuration](#-configuration) • [🚧 Roadmap](#-roadmap) • [📜 License](#-license)
+[✨ Features](#-features) • [📦 Installation](#-installation) • [🔧 Shell Config](#-add-to-your-shell-config) • [🛠 Configuration](#-configuration) • [📜 License](#-license)
 
 </div>
-
----
-> ⚠️ Note: Pulsarship is still under development. Until the first stable release, it is not recommended for daily use.
 
 ## ✨ Features
 
@@ -102,15 +98,6 @@ peach = "#fab387"
 ```
 
 For more information visit the [Wiki](https://github.com/xeyossr/pulsarship/wiki).
-
-## 🚧 Roadmap
-- [x] Basic prompt rendering
-- [x] Component system
-- [x] Color palette mapping
-- [x] Async component rendering
-- [x] Support for writing custom user-defined modules
-- [x] AUR packaging and support for Arch-based systems
-- [ ] Right prompt support
 
 ## 🤝 Contributing
 Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.

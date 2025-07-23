@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+
+	env "github.com/xeyossr/pulsarship/internal"
 )
 
 // Create a pointer to a value of any type
@@ -62,7 +64,17 @@ func Print(text, hex string, palette *map[string]string) string {
 	if err != nil {
 		return text
 	}
-	return fmt.Sprintf("\x1b[38;2;%d;%d;%dm%s\x1b[0m", r, g, b, text)
+
+	colorSeq := fmt.Sprintf("\x1b[38;2;%d;%d;%dm", r, g, b)
+	resetSeq := "\x1b[0m"
+
+	if strings.ToLower(env.PULSARSHIP_SHELL) == "zsh" {
+		colorSeq = "%{" + colorSeq + "%}"
+		resetSeq = "%{" + resetSeq + "%}"
+	}
+
+	return fmt.Sprintf("%s%s%s", colorSeq, text, resetSeq)
+	//return fmt.Sprintf("\x1b[38;2;%d;%d;%dm%s\x1b[0m", r, g, b, text)
 }
 
 var (

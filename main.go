@@ -16,6 +16,7 @@ func main() {
 	cli.InitCmd.AddCommand(cli.InitFishCmd)
 	cli.RootCmd.AddCommand(cli.InitCmd)
 	cli.RootCmd.AddCommand(cli.PromptCmd)
+	cli.RootCmd.AddCommand(cli.RightCmd)
 
 	if err := cli.RootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, "Error:", err)

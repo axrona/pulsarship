@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/xeyossr/pulsarship/internal/models"
+	"github.com/xeyossr/pulsarship/internal/utils"
 )
 
 type PromptPart struct {
@@ -54,12 +55,20 @@ func SplitPrompt(prompt string) []PromptPart {
 	return parts
 }
 
-func GenPrompt(config models.PromptConfig) (string, error) {
-	if config.Prompt == "" {
-		config.Prompt = "{cwd} > "
+func GenPrompt(right bool, config models.PromptConfig) (string, error) {
+	var prompt string
+
+	if right {
+		utils.SetDefault(&config.RightPrompt, "")
+		prompt = *config.RightPrompt
+	} else {
+		if config.Prompt == "" {
+			config.Prompt = "{cwd} > "
+		}
+		prompt = config.Prompt
 	}
 
-	parts := SplitPrompt(config.Prompt)
+	parts := SplitPrompt(prompt)
 	components := BuildComponentMap(config)
 
 	resultChans := make(map[string]<-chan models.Result)
@@ -79,7 +88,7 @@ func GenPrompt(config models.PromptConfig) (string, error) {
 
 	var builder strings.Builder
 
-	if config.AddNewLine {
+	if !right && config.AddNewLine {
 		builder.WriteString("\n")
 	}
 
