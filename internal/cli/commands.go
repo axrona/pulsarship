@@ -33,6 +33,19 @@ var PromptCmd = &cobra.Command{
 	},
 }
 
+var RightCmd = &cobra.Command{
+	Use:   "right",
+	Short: "",
+	Run: func(cmd *cobra.Command, args []string) {
+		path := config.GetConfigPath(flags.ConfigFlag)
+		err := RunRightPrompt(path, os.Stdout)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "Error:", err)
+			os.Exit(1)
+		}
+	},
+}
+
 var InitBashCmd = &cobra.Command{
 	Use:   "bash",
 	Short: "Prints Bash init script",
