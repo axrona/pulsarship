@@ -14,8 +14,9 @@ type Result struct {
 }
 
 type PromptConfig struct {
-	Prompt     string `toml:"prompt"`
-	AddNewLine bool   `toml:"add_newline"`
+	Prompt      string  `toml:"prompt"`
+	RightPrompt *string `toml:"prompt_right"`
+	AddNewLine  bool    `toml:"add_newline"`
 
 	Custom    map[string]CustomComponentConfig `toml:"custom"`
 	Hostname  HostnameConfig                   `toml:"hostname"`
