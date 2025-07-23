@@ -1,7 +1,7 @@
 # 🚀🌠 Pulsarship
 
 <div align="center">
-
+  
 <!-- Badges -->
 [![License: GPL3](https://img.shields.io/github/license/xeyossr/pulsarship?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](https://github.com/xeyossr/pulsarship/blob/main/LICENSE)
 [![Go Version](https://img.shields.io/badge/Go-1.24+-blue?style=for-the-badge&logo=go&logoColor=white)](https://golang.org/dl/)
@@ -19,13 +19,26 @@
 
 ## ✨ Features
 
-- ⚙️ **Modular architecture** – Easily customize each part of the prompt
-- 🎨 **Color palette support** – Define theme colors using `palette` and reference them in components
-- 🧩 **Components** – Includes built-in components such as:
-  - `cwd`, `username`, `hostname`, `character`, `time`, `git`, and more
-- 🧰 **Custom components** – Define your own modules using simple config + shell scripts
-- ⚡ **Blazing fast** – Lightweight Go binary with minimal memory usage
-- 🧪 **Extensible** – Future support planned for right prompt, custom modules, async updates
+<table>
+  <tr>
+    <td valign="top">
+
+
+- ⚙️ <b>Modular architecture</b> – Easily customize each part of the prompt  
+- 🎨 <b>Color palette support</b> – Define theme colors using `palette`  
+- 🧩 <b>Components</b> – Includes:
+  - `cwd`, `username`, `hostname`, `git`, `character`, etc  
+- 🧰 <b>Custom components</b> – Define your own modules  
+- ⚡ <b>Blazing fast</b> – Lightweight Go binary  
+- 🧪 <b>Extensible</b> – Right prompt, async, etc  
+
+</td>
+    <td valign="top">
+      <img src="https://github.com/user-attachments/assets/e9ac28f5-a464-4a63-b74a-95968314ff0e" width="400"/>
+    </td>
+  </tr>
+</table>
+
 
 ---
 
