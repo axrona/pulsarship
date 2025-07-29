@@ -25,7 +25,8 @@ type PromptConfig struct {
 	Time      TimeConfig                       `toml:"time"`
 	Character CharacterConfig                  `toml:"character"`
 	Palette   PaletteConfig                    `toml:"palette"`
-	Git       GitConfig                        `toml:"git"`
+	GitBranch GitBranchConfig                  `toml:"git_branch"`
+	GitStatus GitStatusConfig                  `toml:"git_status"`
 }
 
 type HostnameConfig struct {
@@ -56,7 +57,11 @@ type CustomComponentConfig struct {
 	Run    *string `toml:"run"`
 }
 
-type GitConfig struct {
+type GitBranchConfig struct {
+	Format *string `toml:"format"`
+}
+
+type GitStatusConfig struct {
 	Format      *string `toml:"format"`
 	CleanSuffix *string `toml:"clean_suffix"`
 	Conflicted  *string `toml:"conflicted"`
