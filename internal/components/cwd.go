@@ -42,7 +42,7 @@ func (c *CwdComponent) Val() (string, error) {
 
 func (c *CwdComponent) Render() (models.Result, error) {
 	utils.SetDefault(&c.Config.MaxLength, 3)
-	utils.SetDefault(&c.Config.Format, "{cwd}")
+	utils.SetDefault(&c.Config.Format, "^(#8e9ae6){cwd}^")
 	var format string = *c.Config.Format
 
 	val, err := c.Val()
