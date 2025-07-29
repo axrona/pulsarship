@@ -32,7 +32,7 @@ func (t *TimeComponent) Val() (string, error) {
 
 func (t *TimeComponent) Render() (models.Result, error) {
 	utils.SetDefault(&t.Config.TimeFormat, "15:04:05")
-	utils.SetDefault(&t.Config.Format, "{time}")
+	utils.SetDefault(&t.Config.Format, "^(#97a1c3){time}^")
 	var format string = *t.Config.Format
 
 	val, err := t.Val()
