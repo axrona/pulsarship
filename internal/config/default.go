@@ -6,7 +6,7 @@ import (
 )
 
 var DefaultConfig = models.PromptConfig{
-	Prompt:     "{cwd}  {git}\n{character} ",
+	Prompt:     "{cwd} {git_branch} {git_status}\n{character} ",
 	AddNewLine: true,
 
 	Hostname: models.HostnameConfig{
@@ -27,21 +27,26 @@ var DefaultConfig = models.PromptConfig{
 		Icon:   utils.Ptr("❯"),
 		Format: utils.Ptr("^(peach){character}^"),
 	},
-	Git: models.GitConfig{
-		Format:      utils.Ptr("^(mauve) {branch} {status}^ "),
-		CleanSuffix: utils.Ptr("^(overlay1)✔^ "),
-		Conflicted:  utils.Ptr("^(red)Conflicted {count}^ "),
-		Ahead:       utils.Ptr("^(green)↑{count}^ "),
-		Behind:      utils.Ptr("^(peach)↓{count}^ "),
-		Diverged:    utils.Ptr("^(yellow)↕{count}^ "),
-		UpToDate:    utils.Ptr("^(green)✓^ "),
-		Untracked:   utils.Ptr("^(overlay1)?{count}^ "),
-		Stashed:     utils.Ptr("^(sky)★{count}^ "),
-		Modified:    utils.Ptr("^(flamingo)!{count}^ "),
-		Staged:      utils.Ptr("^(lavender)+{count}^ "),
-		Renamed:     utils.Ptr("^(sapphire)»{count}^ "),
-		Deleted:     utils.Ptr("^(red)-{count} ^"),
+	GitBranch: models.GitBranchConfig{
+		Format: utils.Ptr("^(yellow)on^ ^(mauve) {branch}^"),
 	},
+
+	GitStatus: models.GitStatusConfig{
+		Format:      utils.Ptr("^(red)[^{status}^(red)]^"),
+		CleanSuffix: utils.Ptr(""),
+		Conflicted:  utils.Ptr("^(red)✖^"),
+		Ahead:       utils.Ptr("^(red)⇡^"),
+		Behind:      utils.Ptr("^(red)⇣^"),
+		Diverged:    utils.Ptr("^(red)⇕^"),
+		UpToDate:    utils.Ptr("^(red)✓^"),
+		Untracked:   utils.Ptr("^(red)?^"),
+		Stashed:     utils.Ptr("^(red)S^"),
+		Modified:    utils.Ptr("^(red)~^"),
+		Staged:      utils.Ptr("^(red)+^"),
+		Renamed:     utils.Ptr("^(red)»^"),
+		Deleted:     utils.Ptr("^(red)✘^"),
+	},
+
 	Palette: models.PaletteConfig{
 		"rosewater": "#f5e0dc",
 		"flamingo":  "#f2cdcd",
