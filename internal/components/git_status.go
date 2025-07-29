@@ -146,6 +146,10 @@ func (g *GitStatusComponent) Val() (string, error) {
 func (g *GitStatusComponent) Render() (models.Result, error) {
 	utils.SetDefault(&g.Config.Format, "{status}")
 	val, err := g.Val()
+	if val == "" {
+		return models.Result{Skip: true}, nil
+	}
+
 	if err != nil {
 		return models.Result{Skip: true}, err
 	}
