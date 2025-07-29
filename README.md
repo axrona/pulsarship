@@ -65,7 +65,6 @@ make install
 Add the following to your `~/.config/fish/config.fish`:
 **Fish:**
 ```bash
-set -Ux PULSARSHIP_SHELL fish
 set -Ux PULSARSHIP_CONFIG ~/.config/pulsarship/pulsarship.toml
 pulsarship init fish | source
 ```
@@ -73,7 +72,6 @@ pulsarship init fish | source
 **Zsh:**
 Add the following to your `~/.zshrc`:
 ```zsh
-export PULSARSHIP_SHELL="zsh"
 export PULSARSHIP_CONFIG="$HOME/.config/pulsarship/pulsarship.toml"
 eval "$(pulsarship init zsh)"
 ```
@@ -81,7 +79,6 @@ eval "$(pulsarship init zsh)"
 **Bash:**
 Add the following to your `~/.bashrc`:
 ```bash
-export PULSARSHIP_SHELL="bash"
 export PULSARSHIP_CONFIG="$HOME/.config/pulsarship/pulsarship.toml"
 eval "$(pulsarship init bash)"
 ```
