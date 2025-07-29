@@ -24,8 +24,8 @@ func (c *CharacterComponent) Val() (string, error) {
 }
 
 func (c *CharacterComponent) Render() (models.Result, error) {
-	utils.SetDefault(&c.Config.Icon, ">")
-	utils.SetDefault(&c.Config.Format, ">")
+	utils.SetDefault(&c.Config.Icon, "❯")
+	utils.SetDefault(&c.Config.Format, "^(#f2bfa3){character}^")
 	var format string = *c.Config.Format
 
 	val, err := c.Val()

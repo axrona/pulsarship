@@ -4,54 +4,40 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"strings"
 
 	"github.com/xeyossr/pulsarship/internal/models"
 	"github.com/xeyossr/pulsarship/internal/utils"
 )
 
-type GitComponent struct {
-	Config  models.GitConfig
+type GitStatusComponent struct {
+	Config  models.GitStatusConfig
 	Palette models.PaletteConfig
 }
 
 func init() {
-	Registry["git"] = func(config models.PromptConfig) models.Component {
-		return &GitComponent{
-			Config:  config.Git,
+	Registry["git_status"] = func(config models.PromptConfig) models.Component {
+		return &GitStatusComponent{
+			Config:  config.GitStatus,
 			Palette: config.Palette,
 		}
 	}
 }
 
-func findGitRoot(start string) (string, error) {
-	dir := start
-	for {
-		if _, err := os.Stat(filepath.Join(dir, ".git")); err == nil {
-			return dir, nil
-		}
-		parent := filepath.Dir(dir)
-		if parent == dir {
-			return "", fmt.Errorf(".git directory not found")
-		}
-		dir = parent
-	}
-}
-
-func Status(g *GitComponent) (string, error) {
+func (g *GitStatusComponent) Val() (string, error) {
+	utils.SetDefault(&g.Config.Format, "^(#f28fad)[^{status}^(#f28fad)]^")
 	utils.SetDefault(&g.Config.CleanSuffix, "")
-	utils.SetDefault(&g.Config.UpToDate, " ^(#ff0000)[✓]^")
-	utils.SetDefault(&g.Config.Conflicted, " ^(#ff0000)[!?]^")
-	utils.SetDefault(&g.Config.Ahead, " ^(#ff0000)[↑+]^")
-	utils.SetDefault(&g.Config.Behind, " ^(#ff0000)[↓-]^")
-	utils.SetDefault(&g.Config.Diverged, " ^(#ff0000)[⇅!?]^")
-	utils.SetDefault(&g.Config.Untracked, " ^(#ff0000)[?{count}]^")
-	utils.SetDefault(&g.Config.Stashed, " ^(#ff0000)[S{count}]^")
-	utils.SetDefault(&g.Config.Modified, " ^(#ff0000)[M{count}]^")
-	utils.SetDefault(&g.Config.Staged, " ^(#ff0000)[+{count}]^")
-	utils.SetDefault(&g.Config.Renamed, " ^(#ff0000)[R{count}]^")
-	utils.SetDefault(&g.Config.Deleted, " ^(#ff0000)[X{count}]^")
+	utils.SetDefault(&g.Config.Conflicted, "^(#f28fad)✖^")
+	utils.SetDefault(&g.Config.Ahead, "^(#f28fad)⇡^")
+	utils.SetDefault(&g.Config.Behind, "^(#f28fad)⇣^")
+	utils.SetDefault(&g.Config.Diverged, "^(#f28fad)⇕^")
+	utils.SetDefault(&g.Config.UpToDate, "^(#f28fad)✓^")
+	utils.SetDefault(&g.Config.Untracked, "^(#f28fad)?^")
+	utils.SetDefault(&g.Config.Stashed, "^(#f28fad)S^")
+	utils.SetDefault(&g.Config.Modified, "^(#f28fad)~^")
+	utils.SetDefault(&g.Config.Staged, "^(#f28fad)+^")
+	utils.SetDefault(&g.Config.Renamed, "^(#f28fad)»^")
+	utils.SetDefault(&g.Config.Deleted, "^(#f28fad)✘^")
 
 	cwd, _ := os.Getwd()
 	_, err := findGitRoot(cwd)
@@ -157,39 +143,26 @@ func Status(g *GitComponent) (string, error) {
 	return suffix, nil
 }
 
-func (g *GitComponent) Val() (string, error) {
-	branchCmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
-	branchOut, err := branchCmd.Output()
-	if err != nil {
-		return "", err
-	}
-	branch := strings.TrimSpace(string(branchOut))
-
-	return branch, nil
-}
-
-func (g *GitComponent) Render() (models.Result, error) {
-	utils.SetDefault(&g.Config.Format, "^(#f2a971) {git}^")
+func (g *GitStatusComponent) Render() (models.Result, error) {
+	utils.SetDefault(&g.Config.Format, "{status}")
 	val, err := g.Val()
-	if err != nil {
-		return models.Result{Skip: true}, err
+	if val == "" {
+		return models.Result{Skip: true}, nil
 	}
 
-	status, err := Status(g)
 	if err != nil {
 		return models.Result{Skip: true}, err
 	}
 
 	rendered, err := utils.RenderFormat(*g.Config.Format, map[string]string{
-		"git":    val,
-		"branch": val,
-		"status": status,
+		"git_status": val,
+		"status":     val,
 	}, (*map[string]string)(&g.Palette))
 
 	return models.Result{Value: rendered}, err
 }
 
-func (g *GitComponent) RenderAsync() <-chan models.Result {
+func (g *GitStatusComponent) RenderAsync() <-chan models.Result {
 	ch := make(chan models.Result, 1)
 	go func() {
 		val, err := g.Render()
@@ -198,6 +171,6 @@ func (g *GitComponent) RenderAsync() <-chan models.Result {
 	return ch
 }
 
-func (g GitComponent) Name() string {
-	return "git"
+func (g GitStatusComponent) Name() string {
+	return "git_status"
 }
