@@ -5,7 +5,7 @@ TAG := $(shell git describe --tags)
 COMMIT := $(shell git rev-parse --short HEAD)
 BUILDTIME := $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
 BUILDENV := $(shell go version)
-LDFLAGS := -X main.version=$(VERSION) -X main.tag=$(TAG) -X main.commit=$(COMMIT) -X main.buildTime=$(BUILDTIME) -X main.buildEnv=$(BUILDENV)
+LDFLAGS := -X 'main.version=$(VERSION)' -X 'main.tag=$(TAG)' -X 'main.commit=$(COMMIT)' -X 'main.buildTime=$(BUILDTIME)' -X 'main.buildEnv=$(BUILDENV)'
 
 GOCMD := go
 GOBUILD := $(GOCMD) build
