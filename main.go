@@ -20,10 +20,12 @@ func printVersion() string {
 tag:%s
 commit_hash:%s
 build_time:%s
-build_env:%s`, version, tag, commit, buildTime, buildEnv)
+build_env:%s
+`, version, tag, commit, buildTime, buildEnv)
 }
 
 func main() {
+	cli.RootCmd.SetVersionTemplate(printVersion())
 	cli.RootCmd.Version = printVersion()
 	if err := cli.RootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, "Error:", err)
