@@ -54,12 +54,14 @@ or
 paru -S pulsarship
 ```
 
-### 🛠️ Manual Installation
+### 🛠️ Install via Script
+You can install `pulsarship` with a single command:
+
 ```bash
-git clone https://github.com/xeyossr/pulsarship
-cd pulsarship
-make install
+curl -sS https://raw.githubusercontent.com/xeyossr/pulsarship/main/install.sh | bash
 ```
+
+This script will clone the repository, build the binary, and install it for you.
 
 ### 🔧 Add to your shell config
 Add the following to your `~/.config/fish/config.fish`:
