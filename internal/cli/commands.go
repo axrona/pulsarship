@@ -75,3 +75,17 @@ var InitFishCmd = &cobra.Command{
 		fmt.Println(initShell.FishInit())
 	},
 }
+
+func init() {
+	RootCmd.PersistentFlags().StringVarP(&flags.ConfigFlag, "config", "c", "", "Path to the config file")
+	RootCmd.CompletionOptions.DisableDefaultCmd = true
+	PromptCmd.Flags().BoolVarP(&flags.ShowRight, "right", "r", false, "Print the right prompt instead of left prompt")
+
+	RootCmd.AddCommand(InitCmd)
+	RootCmd.AddCommand(GenConfig)
+	RootCmd.AddCommand(PromptCmd)
+
+	InitCmd.AddCommand(InitBashCmd)
+	InitCmd.AddCommand(InitZshCmd)
+	InitCmd.AddCommand(InitFishCmd)
+}
