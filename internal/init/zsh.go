@@ -11,7 +11,7 @@ function pulsarship_prompt() {
 }
 
 function pulsarship_right_prompt() {
-  /usr/bin/pulsarship right
+  /usr/bin/pulsarship prompt --right
 }
 
 PROMPT='$(pulsarship_prompt)'
