@@ -5,19 +5,28 @@ import (
 	"os"
 
 	"github.com/xeyossr/pulsarship/internal/cli"
-	"github.com/xeyossr/pulsarship/internal/cli/flags"
 )
 
+var (
+	version   = "dev"
+	tag       = "none"
+	commit    = "none"
+	buildTime = "unknown"
+	buildEnv  = "unknown"
+)
+
+func printVersion() string {
+	return fmt.Sprintf(`pulsarship %s
+tag:%s
+commit_hash:%s
+build_time:%s
+build_env:%s
+`, version, tag, commit, buildTime, buildEnv)
+}
+
 func main() {
-	cli.RootCmd.PersistentFlags().StringVarP(&flags.ConfigFlag, "config", "c", "", "Path to the config file")
-
-	cli.InitCmd.AddCommand(cli.InitBashCmd)
-	cli.InitCmd.AddCommand(cli.InitZshCmd)
-	cli.InitCmd.AddCommand(cli.InitFishCmd)
-	cli.RootCmd.AddCommand(cli.InitCmd)
-	cli.RootCmd.AddCommand(cli.PromptCmd)
-	cli.RootCmd.AddCommand(cli.RightCmd)
-
+	cli.RootCmd.SetVersionTemplate(printVersion())
+	cli.RootCmd.Version = printVersion()
 	if err := cli.RootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, "Error:", err)
 		os.Exit(1)
