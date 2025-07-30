@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/xeyossr/pulsarship/internal/cli"
-	"github.com/xeyossr/pulsarship/internal/cli/flags"
 )
 
 var (
@@ -16,40 +15,16 @@ var (
 	buildEnv  = "unknown"
 )
 
-func printVersion() {
-	fmt.Printf(`pulsarship %s
+func printVersion() string {
+	return fmt.Sprintf(`pulsarship %s
 tag:%s
 commit_hash:%s
 build_time:%s
-build_env:%s
-`, version, tag, commit, buildTime, buildEnv)
+build_env:%s`, version, tag, commit, buildTime, buildEnv)
 }
 
 func main() {
-	cli.RootCmd.PersistentFlags().StringVarP(&flags.ConfigFlag, "config", "c", "", "Path to the config file")
-	cli.RootCmd.PersistentFlags().BoolVarP(&flags.ShowVersion, "version", "v", false, "Print version")
-
-	cli.PromptCmd.Flags().BoolVarP(&flags.ShowRight, "right", "r", false, "Print the right prompt instead of left prompt")
-
-	cli.InitCmd.AddCommand(cli.InitBashCmd)
-	cli.InitCmd.AddCommand(cli.InitZshCmd)
-	cli.InitCmd.AddCommand(cli.InitFishCmd)
-
-	cli.RootCmd.AddCommand(cli.InitCmd)
-	cli.RootCmd.AddCommand(cli.PromptCmd)
-	cli.RootCmd.AddCommand(cli.GenConfig)
-
-	err := cli.RootCmd.ParseFlags(os.Args[1:])
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "Error parsing flags:", err)
-		os.Exit(1)
-	}
-
-	if flags.ShowVersion {
-		printVersion()
-		os.Exit(0)
-	}
-
+	cli.RootCmd.Version = printVersion()
 	if err := cli.RootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, "Error:", err)
 		os.Exit(1)
