@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/spf13/cobra"
 	"github.com/xeyossr/pulsarship/internal/cli"
 	"github.com/xeyossr/pulsarship/internal/cli/flags"
 )
@@ -40,16 +39,15 @@ func main() {
 	cli.RootCmd.AddCommand(cli.PromptCmd)
 	cli.RootCmd.AddCommand(cli.GenConfig)
 
-	cli.RootCmd.Run = func(cmd *cobra.Command, args []string) {
-		if flags.ShowVersion {
-			printVersion()
-			os.Exit(0) // Exit after printing version
-		}
+	err := cli.RootCmd.ParseFlags(os.Args[1:])
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Error parsing flags:", err)
+		os.Exit(1)
+	}
 
-		if err := cli.RootCmd.Execute(); err != nil {
-			fmt.Fprintln(os.Stderr, "Error:", err)
-			os.Exit(1)
-		}
+	if flags.ShowVersion {
+		printVersion()
+		os.Exit(0)
 	}
 
 	if err := cli.RootCmd.Execute(); err != nil {
