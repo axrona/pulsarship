@@ -1,7 +1,11 @@
 BINARY := pulsarship
 BUILD_DIR := build
-VERSION := $(shell git describe --tags --always --dirty)
-#LDFLAGS := -s -w -X main.version=$(VERSION)
+VERSION := $(shell git describe --tags --abbrev=0)
+TAG := $(shell git describe --tags)
+COMMIT := $(shell git rev-parse --short HEAD)
+BUILDTIME := $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
+BUILDENV := $(shell go version)
+LDFLAGS := -X main.version=$(VERSION) -X main.tag=$(TAG) -X main.commit=$(COMMIT) -X main.buildTime=$(BUILDTIME) -X main.buildEnv=$(BUILDENV)
 
 GOCMD := go
 GOBUILD := $(GOCMD) build
@@ -15,8 +19,7 @@ all: fmt vet test build install
 
 .PHONY: build
 build:
-#	$(GOBUILD) -ldflags "$(LDFLAGS)" -o $(BUILD_DIR)/$(BINARY) .
-	$(GOBUILD) -o $(BUILD_DIR)/$(BINARY) .
+	$(GOBUILD) -ldflags "$(LDFLAGS)" -o $(BUILD_DIR)/$(BINARY) .
 
 .PHONY: install
 install: build
