@@ -89,29 +89,11 @@ eval "$(pulsarship init bash)"
 > `source ~/.config/fish/config.fish` or `source ~/.bashrc` or `source ~/.zshrc`
 
 ## 🛠 Configuration
-The default config file location is `~/.config/pulsarship/pulsarship.toml`
 
-Pulsarship uses TOML-based configuration:
-```toml
-prompt = '''
-{cwd} 
-{character} '''
+The default config file location is `~/.config/pulsarship/pulsarship.toml`.   
+You can generate this file by running the `pulsarship gen-config` command.
 
-add_newline = true
-
-[cwd]
-format = "^(lavender)[{cwd}]^"
-max_length = 5
-
-[character]
-icon = "❯"
-format = "^(peach){character}^"
-
-[palette]
-lavender = "#b4befe"
-peach = "#fab387"
-```
-
+Pulsarship uses TOML-based configuration for customizing the prompt and other settings.   
 For more information visit the [Wiki](https://github.com/xeyossr/pulsarship/wiki).
 
 ## 🤝 Contributing
