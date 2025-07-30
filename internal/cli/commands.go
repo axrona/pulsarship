@@ -19,26 +19,32 @@ var InitCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Prints the shell function used to execute pulsarship",
 }
-
-var PromptCmd = &cobra.Command{
-	Use:   "prompt",
-	Short: "",
+var GenConfig = &cobra.Command{
+	Use:   "gen-config",
+	Short: "Generates a default configuration file",
 	Run: func(cmd *cobra.Command, args []string) {
 		path := config.GetConfigPath(flags.ConfigFlag)
-		err := RunPrompt(path, os.Stdout)
-		if err != nil {
-			fmt.Fprintln(os.Stderr, "Error:", err)
+		if err := config.WriteDefaultConfig(path); err != nil {
+			fmt.Fprintln(os.Stderr, "Error generating config:", err)
 			os.Exit(1)
 		}
+		fmt.Println("Configuration file generated at:", path)
 	},
 }
 
-var RightCmd = &cobra.Command{
-	Use:   "right",
-	Short: "",
+var PromptCmd = &cobra.Command{
+	Use:   "prompt",
+	Short: "Prints the full pulsarship prompt",
 	Run: func(cmd *cobra.Command, args []string) {
 		path := config.GetConfigPath(flags.ConfigFlag)
-		err := RunRightPrompt(path, os.Stdout)
+		var err error
+
+		if flags.ShowRight {
+			err = RunRightPrompt(path, os.Stdout)
+		} else {
+			err = RunPrompt(path, os.Stdout)
+		}
+
 		if err != nil {
 			fmt.Fprintln(os.Stderr, "Error:", err)
 			os.Exit(1)
