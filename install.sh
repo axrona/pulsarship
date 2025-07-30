@@ -57,12 +57,12 @@ if command_exists make; then
 else
     print_info "⚡ Running 'go build'..."
     go build -ldflags "\
-  -X main.version=$(git describe --tags --abbrev=0) \
-  -X main.tag=$(git describe --tags) \
-  -X main.commit=$(git rev-parse --short HEAD) \
-  -X main.buildTime=$(date -u +%Y-%m-%dT%H:%M:%SZ) \
-  -X main.buildEnv=$(go version)" \
-        -o pulsarship main.go
+  -X 'main.version=$(git describe --tags --abbrev=0)' \
+  -X 'main.tag=$(git describe --tags)' \
+  -X 'main.commit=$(git rev-parse --short HEAD)' \
+  -X 'main.buildTime=$(date -u +%Y-%m-%dT%H:%M:%SZ)' \
+  -X 'main.buildEnv=$(go version)'" \
+        -o pulsarship .
 
     print_info "⚡ Installing to /usr/bin ..."
     sudo install -Dm755 pulsarship "/usr/bin/pulsarship"
