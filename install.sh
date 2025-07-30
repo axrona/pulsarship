@@ -58,7 +58,7 @@ else
     print_info "⚡ Running 'go build'..."
     go build -ldflags "\
   -X 'main.version=$(git describe --tags --abbrev=0)' \
-  -X 'main.tag=$(git describe --tags)' \
+  -X 'main.tag=$(git describe --tags --abbrev=0)' \
   -X 'main.commit=$(git rev-parse --short HEAD)' \
   -X 'main.buildTime=$(date -u +%Y-%m-%dT%H:%M:%SZ)' \
   -X 'main.buildEnv=$(go version)'" \

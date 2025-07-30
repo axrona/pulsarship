@@ -1,7 +1,7 @@
 BINARY := pulsarship
 BUILD_DIR := build
 VERSION := $(shell git describe --tags --abbrev=0)
-TAG := $(shell git describe --tags)
+TAG := $(shell git describe --tags --abbrev=0)
 COMMIT := $(shell git rev-parse --short HEAD)
 BUILDTIME := $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
 BUILDENV := $(shell go version)
