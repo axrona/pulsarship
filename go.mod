@@ -3,7 +3,7 @@ module github.com/xeyossr/pulsarship
 go 1.24.5
 
 require (
-	github.com/BurntSushi/toml v1.5.0
+	github.com/pelletier/go-toml/v2 v2.2.4
 	github.com/spf13/cobra v1.9.1
 )
 
