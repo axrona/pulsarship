@@ -8,7 +8,7 @@ function fish_prompt
 end
 
 function fish_right_prompt
-	/usr/bin/pulsarship right
+	/usr/bin/pulsarship prompt --right
 end
 `
 }
