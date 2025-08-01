@@ -28,9 +28,11 @@ func RunPrompt(path string, out io.Writer) error {
 
 func RunRightPrompt(path string, out io.Writer) error {
 	configData, err := cfg.ParseConfig(path)
-	if err != nil {
-		configData = cfg.DefaultConfig
-	}
+	utils.IfNotDebug(err, func() {
+		if err != nil {
+			configData = cfg.DefaultConfig
+		}
+	})
 
 	rightPrompt, err := components.GenPrompt(true, configData)
 	if err != nil {
