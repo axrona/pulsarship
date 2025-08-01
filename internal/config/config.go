@@ -4,12 +4,58 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strings"
 
 	"github.com/pelletier/go-toml/v2"
 	env "github.com/xeyossr/pulsarship/internal"
 	"github.com/xeyossr/pulsarship/internal/models"
+	"github.com/xeyossr/pulsarship/internal/utils"
 )
+
+func DeepMerge(dst, src interface{}) {
+	dv := reflect.ValueOf(dst).Elem()
+	sv := reflect.ValueOf(src).Elem()
+
+	for i := 0; i < dv.NumField(); i++ {
+		df := dv.Field(i)
+		sf := sv.Field(i)
+
+		// Skip unexported fields
+		if !df.CanSet() {
+			continue
+		}
+
+		switch df.Kind() {
+		case reflect.Ptr:
+			if !sf.IsNil() {
+				df.Set(sf)
+			}
+
+		case reflect.Struct:
+			// recurse into struct
+			dfPtr := df.Addr().Interface()
+			sfPtr := sf.Addr().Interface()
+			DeepMerge(dfPtr, sfPtr)
+
+		case reflect.Map:
+			if !sf.IsNil() {
+				if df.IsNil() {
+					df.Set(reflect.MakeMap(df.Type()))
+				}
+				for _, key := range sf.MapKeys() {
+					df.SetMapIndex(key, sf.MapIndex(key))
+				}
+			}
+
+		default:
+			zero := reflect.Zero(df.Type())
+			if !reflect.DeepEqual(sf.Interface(), zero.Interface()) {
+				df.Set(sf)
+			}
+		}
+	}
+}
 
 func ExpandPath(path string) string {
 	if strings.HasPrefix(path, "~/") {
