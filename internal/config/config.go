@@ -89,6 +89,21 @@ func ParseConfig(file string) (models.PromptConfig, error) {
 		return models.PromptConfig{}, fmt.Errorf("could not parse config file: %w", err)
 	}
 
+	if config.Import != nil && *config.Import != "" {
+		importPath := filepath.Join(filepath.Dir(file), ExpandPath(*config.Import))
+		importData, err := ParseConfig(importPath)
+		utils.IfNotDebug(func() {
+			if err != nil {
+				return
+			}
+			DeepMerge(&config, &importData)
+		}, func() {
+			if err != nil {
+				panic(fmt.Errorf("could not import %s: %w", importPath, err))
+			}
+		})
+	}
+
 	return config, nil
 }
 
