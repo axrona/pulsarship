@@ -2,11 +2,43 @@ package utils
 
 import (
 	"fmt"
+	"os"
+	"reflect"
 	"regexp"
 	"strings"
 
 	env "github.com/xeyossr/pulsarship/internal"
 )
+
+// check if the PULSARSHIP_DEBUG environment variable is set to "1"
+func IsDebug() bool {
+	return os.Getenv("PULSARSHIP_DEBUG") == "1"
+}
+
+// if not in debug mode, execute the function
+func IfNotDebug(fnNotDebug interface{}, fnDebug interface{}, params ...interface{}) {
+	var fn interface{}
+	if IsDebug() {
+		fn = fnDebug
+	} else {
+		fn = fnNotDebug
+	}
+
+	fnValue := reflect.ValueOf(fn)
+	if fnValue.Kind() != reflect.Func {
+		if err, ok := fn.(error); ok {
+			panic(err)
+		}
+		return
+	}
+
+	in := make([]reflect.Value, len(params))
+	for i, param := range params {
+		in[i] = reflect.ValueOf(param)
+	}
+
+	fnValue.Call(in)
+}
 
 // Create a pointer to a value of any type
 func Ptr[T any](v T) *T {

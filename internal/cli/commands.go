@@ -78,7 +78,7 @@ var InitFishCmd = &cobra.Command{
 
 func init() {
 	RootCmd.PersistentFlags().StringVarP(&flags.ConfigFlag, "config", "c", "", "Path to the config file")
-	RootCmd.CompletionOptions.DisableDefaultCmd = true
+	RootCmd.CompletionOptions.HiddenDefaultCmd = true
 	PromptCmd.Flags().BoolVarP(&flags.ShowRight, "right", "r", false, "Print the right prompt instead of left prompt")
 
 	RootCmd.AddCommand(InitCmd)
