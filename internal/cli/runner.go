@@ -6,13 +6,16 @@ import (
 
 	"github.com/xeyossr/pulsarship/internal/components"
 	cfg "github.com/xeyossr/pulsarship/internal/config"
+	"github.com/xeyossr/pulsarship/internal/utils"
 )
 
 func RunPrompt(path string, out io.Writer) error {
 	configData, err := cfg.ParseConfig(path)
-	if err != nil {
-		configData = cfg.DefaultConfig
-	}
+	utils.IfNotDebug(err, func() {
+		if err != nil {
+			configData = cfg.DefaultConfig
+		}
+	})
 
 	prompt, err := components.GenPrompt(false, configData)
 	if err != nil {
