@@ -14,6 +14,7 @@ type Result struct {
 }
 
 type PromptConfig struct {
+	Import      *string `toml:"import"`
 	Prompt      string  `toml:"prompt"`
 	RightPrompt *string `toml:"prompt_right"`
 	AddNewLine  bool    `toml:"add_newline"`
