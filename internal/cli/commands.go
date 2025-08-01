@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	"github.com/xeyossr/pulsarship/internal/cli/flags"
+	flagvars "github.com/xeyossr/pulsarship/internal/cli/flag_variables"
 	"github.com/xeyossr/pulsarship/internal/config"
 	initShell "github.com/xeyossr/pulsarship/internal/init"
 )
@@ -23,7 +23,7 @@ var GenConfig = &cobra.Command{
 	Use:   "gen-config",
 	Short: "Generates a default configuration file",
 	Run: func(cmd *cobra.Command, args []string) {
-		path := config.GetConfigPath(flags.ConfigFlag)
+		path := config.GetConfigPath(flagvars.ConfigFlag)
 		if err := config.WriteDefaultConfig(path); err != nil {
 			fmt.Fprintln(os.Stderr, "Error generating config:", err)
 			os.Exit(1)
@@ -36,10 +36,10 @@ var PromptCmd = &cobra.Command{
 	Use:   "prompt",
 	Short: "Prints the full pulsarship prompt",
 	Run: func(cmd *cobra.Command, args []string) {
-		path := config.GetConfigPath(flags.ConfigFlag)
+		path := config.GetConfigPath(flagvars.ConfigFlag)
 		var err error
 
-		if flags.ShowRight {
+		if flagvars.ShowRight {
 			err = RunRightPrompt(path, os.Stdout)
 		} else {
 			err = RunPrompt(path, os.Stdout)
@@ -77,9 +77,9 @@ var InitFishCmd = &cobra.Command{
 }
 
 func init() {
-	RootCmd.PersistentFlags().StringVarP(&flags.ConfigFlag, "config", "c", "", "Path to the config file")
+	RootCmd.PersistentFlags().StringVarP(&flagvars.ConfigFlag, "config", "c", "", "Path to the config file")
 	RootCmd.CompletionOptions.HiddenDefaultCmd = true
-	PromptCmd.Flags().BoolVarP(&flags.ShowRight, "right", "r", false, "Print the right prompt instead of left prompt")
+	PromptCmd.Flags().BoolVarP(&flagvars.ShowRight, "right", "r", false, "Print the right prompt instead of left prompt")
 
 	RootCmd.AddCommand(InitCmd)
 	RootCmd.AddCommand(GenConfig)
