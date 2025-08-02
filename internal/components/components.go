@@ -5,6 +5,7 @@ import "github.com/xeyossr/pulsarship/internal/models"
 type ComponentFactory func(config any, palette models.PaletteConfig) models.Component
 
 var Registry = make(map[string]func(config models.PromptConfig) models.Component)
+var SkipComponent = models.Result{Skip: true}
 
 // Create a map of components
 func BuildComponentMap(config models.PromptConfig) map[string]models.Component {

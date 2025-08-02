@@ -36,16 +36,16 @@ func (t *TimeComponent) Render() (models.Result, error) {
 	var format string = *t.Config.Format
 
 	val, err := t.Val()
-	if err != nil {
-		return models.Result{Skip: true}, err
+	if def := utils.Must(err, SkipComponent); def != nil {
+		return *def, err
 	}
 
 	rendered, err := utils.RenderFormat(format, map[string]string{
 		"time": val,
 	}, (*map[string]string)(&t.Palette))
 
-	if err != nil {
-		return models.Result{Skip: true}, err
+	if def := utils.Must(err, SkipComponent); def != nil {
+		return *def, err
 	}
 
 	return models.Result{Value: rendered}, nil

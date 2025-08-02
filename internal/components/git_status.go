@@ -41,8 +41,8 @@ func (g *GitStatusComponent) Val() (string, error) {
 
 	cwd, _ := os.Getwd()
 	_, err := findGitRoot(cwd)
-	if err != nil {
-		return "", nil
+	if def := utils.Must(err, ""); def != nil {
+		return *def, nil
 	}
 
 	counts := map[string]int{
@@ -60,9 +60,10 @@ func (g *GitStatusComponent) Val() (string, error) {
 
 	statusCmd := exec.Command("git", "status", "--porcelain", "--branch")
 	statusOut, err := statusCmd.Output()
-	if err != nil {
-		return "", err
+	if def := utils.Must(err, ""); def != nil {
+		return *def, err
 	}
+
 	lines := strings.Split(string(statusOut), "\n")
 
 	var statusSymbols []string
@@ -124,8 +125,9 @@ func (g *GitStatusComponent) Val() (string, error) {
 			formatted, err := utils.RenderFormat(*val, map[string]string{
 				"count": fmt.Sprintf("%d", counts[key]),
 			}, (*map[string]string)(&g.Palette))
-			if err != nil {
-				return "", err
+
+			if def := utils.Must(err, ""); def != nil {
+				return *def, err
 			}
 			statusSymbols = append(statusSymbols, formatted)
 		}
@@ -133,8 +135,8 @@ func (g *GitStatusComponent) Val() (string, error) {
 
 	if len(statusSymbols) == 0 {
 		suffix, err := utils.RenderFormat(*g.Config.CleanSuffix, map[string]string{}, (*map[string]string)(&g.Palette))
-		if err != nil {
-			return "", err
+		if def := utils.Must(err, ""); def != nil {
+			return *def, err
 		}
 		return suffix, nil
 	}
@@ -150,8 +152,8 @@ func (g *GitStatusComponent) Render() (models.Result, error) {
 		return models.Result{Skip: true}, nil
 	}
 
-	if err != nil {
-		return models.Result{Skip: true}, err
+	if def := utils.Must(err, SkipComponent); def != nil {
+		return *def, err
 	}
 
 	rendered, err := utils.RenderFormat(*g.Config.Format, map[string]string{

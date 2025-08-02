@@ -11,11 +11,13 @@ import (
 
 func RunPrompt(path string, out io.Writer) error {
 	configData, err := cfg.ParseConfig(path)
-	utils.IfNotDebug(err, func() {
-		if err != nil {
+	if err != nil {
+		utils.IfNotDebug(func() {
 			configData = cfg.DefaultConfig
-		}
-	})
+		}, func() {
+			panic(err)
+		})
+	}
 
 	prompt, err := components.GenPrompt(false, configData)
 	if err != nil {
@@ -28,11 +30,13 @@ func RunPrompt(path string, out io.Writer) error {
 
 func RunRightPrompt(path string, out io.Writer) error {
 	configData, err := cfg.ParseConfig(path)
-	utils.IfNotDebug(err, func() {
-		if err != nil {
+	if err != nil {
+		utils.IfNotDebug(func() {
 			configData = cfg.DefaultConfig
-		}
-	})
+		}, func() {
+			panic(err)
+		})
+	}
 
 	rightPrompt, err := components.GenPrompt(true, configData)
 	if err != nil {

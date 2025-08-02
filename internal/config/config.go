@@ -92,16 +92,18 @@ func ParseConfig(file string) (models.PromptConfig, error) {
 	if config.Import != nil && *config.Import != "" {
 		importPath := filepath.Join(filepath.Dir(file), ExpandPath(*config.Import))
 		importData, err := ParseConfig(importPath)
-		utils.IfNotDebug(func() {
-			if err != nil {
-				return
+
+		if err != nil {
+			if utils.IsDebug() {
+				// If error occurs and it's in debug mode, return error
+				return config, err
+			} else {
+				// If error occurs and it's not in debug mode, just skip merging
+				return config, nil
 			}
-			DeepMerge(&config, &importData)
-		}, func() {
-			if err != nil {
-				panic(fmt.Errorf("could not import %s: %w", importPath, err))
-			}
-		})
+		}
+
+		DeepMerge(&config, &importData)
 	}
 
 	return config, nil

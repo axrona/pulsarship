@@ -24,8 +24,8 @@ func init() {
 
 func (c *CwdComponent) Val() (string, error) {
 	cwd, err := os.Getwd()
-	if err != nil {
-		return "", err
+	if def := utils.Must(err, ""); def != nil {
+		return *def, err
 	}
 
 	cwd = strings.ReplaceAll(cwd, os.Getenv("HOME"), "~")
@@ -46,16 +46,16 @@ func (c *CwdComponent) Render() (models.Result, error) {
 	var format string = *c.Config.Format
 
 	val, err := c.Val()
-	if err != nil {
-		return models.Result{Skip: true}, err
+	if def := utils.Must(err, SkipComponent); def != nil {
+		return *def, err
 	}
 
 	rendered, err := utils.RenderFormat(format, map[string]string{
 		"cwd": val,
 	}, (*map[string]string)(&c.Palette))
 
-	if err != nil {
-		return models.Result{Skip: true}, err
+	if def := utils.Must(err, SkipComponent); def != nil {
+		return *def, err
 	}
 
 	return models.Result{Value: rendered}, nil
