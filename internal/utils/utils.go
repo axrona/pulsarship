@@ -52,6 +52,15 @@ func SetDefault[T any](p **T, def T) {
 	}
 }
 
+// Must returns a pointer to the default value if err is non-nil, otherwise nil.
+func Must[T any](err error, def T) *T {
+	if err != nil {
+		return &def
+	}
+
+	return nil
+}
+
 // Resolves a color from a palette or returns the color itself if it's a valid hex code
 func ResolveColor(color *string, palette map[string]string) (string, error) {
 	if color == nil || *color == "" {
