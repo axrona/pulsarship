@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Pulsarship Installation Script
+# Pulsarship Installation Script (Quiet Completions)
 
 # Function to print error messages with red color
 function print_error {
@@ -33,29 +33,22 @@ if ! command_exists git; then
     exit 1
 fi
 
-# Ensure Make is installed (if not, fall back to Go build)
-if ! command_exists make; then
-    print_warning "Make is not installed. Falling back to 'go build' for compilation."
-    if ! command_exists go; then
-        print_error "Go is not installed either. Please install Go or Make to proceed."
-        exit 1
-    fi
+# Ensure Make or Go is installed
+if ! command_exists make && ! command_exists go; then
+    print_error "Neither Make nor Go is installed. Please install one to proceed."
+    exit 1
 fi
 
-# Clear screen before starting the Pulsarship installation
-clear
-print_info "🚀 Cloning the Pulsarship repository..."
+# Clone Pulsarship repo into temp dir
+TMP_DIR=$(mktemp -d -t pulsarship-XXXXXX)
+print_info "🚀 Cloning the Pulsarship repository into $TMP_DIR..."
+git clone https://github.com/xeyossr/pulsarship "$TMP_DIR"
+cd "$TMP_DIR"
 
-# Clone Pulsarship repository and install
-git clone https://github.com/xeyossr/pulsarship
-cd pulsarship
-
-# If Make is not available, use Go build
+# Build Pulsarship
 if command_exists make; then
-    print_info "⚡ Running 'make install'..."
     make install
 else
-    print_info "⚡ Running 'go build'..."
     go build -ldflags "\
   -X 'main.version=$(git describe --tags --abbrev=0)' \
   -X 'main.tag=$(git describe --tags --abbrev=0)' \
@@ -63,11 +56,25 @@ else
   -X 'main.buildTime=$(date -u +%Y-%m-%dT%H:%M:%SZ)' \
   -X 'main.buildEnv=$(go version)'" \
         -o pulsarship .
-
-    print_info "⚡ Installing to /usr/bin ..."
     sudo install -Dm755 pulsarship "/usr/bin/pulsarship"
 fi
 
-# Clear screen and display final success message
-clear
+# Install completions silently to system-wide paths
+COMPLETION_DIRS=(
+    "/usr/share/bash-completion/completions"
+    "/usr/share/fish/vendor_completions.d"
+    "/usr/share/zsh/site-functions"
+)
+
+for dir in "${COMPLETION_DIRS[@]}"; do
+    if [ ! -d "$dir" ]; then
+        sudo install -dm755 "$dir"
+    fi
+done
+
+# Install completions for Bash, Fish, and Zsh silently
+sudo bash -c 'pulsarship completion bash > /usr/share/bash-completion/completions/pulsarship'
+sudo bash -c 'pulsarship completion fish > /usr/share/fish/vendor_completions.d/pulsarship.fish'
+sudo bash -c 'pulsarship completion zsh > /usr/share/zsh/site-functions/_pulsarship'
+
 print_success "🎉 Pulsarship installation completed!"

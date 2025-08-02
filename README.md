@@ -13,7 +13,7 @@
 
 **🚀 Pulsarship** is a minimal, fast and customizable shell prompt tool written in Go.
 
-[✨ Features](#-features) • [📦 Installation](#-installation) • [🔧 Shell Config](#-add-to-your-shell-config) • [🛠 Configuration](#-configuration) • [📜 License](#-license)
+[✨ Features](#-features) • [📦 Installation](#-installation) • [🔧 Shell Config](#-add-to-your-shell-config) • [🛠️ Configuration](#-configuration) • [📜 License](#-license)
 
 </div>
 
@@ -88,7 +88,7 @@ eval "$(pulsarship init bash)"
 > Make sure to restart your shell or source the config file after editing:   
 > `source ~/.config/fish/config.fish` or `source ~/.bashrc` or `source ~/.zshrc`
 
-## 🛠 Configuration
+## 🛠️ Configuration
 
 The default config file location is `~/.config/pulsarship/pulsarship.toml`.   
 You can generate this file by running the `pulsarship gen-config` command.
