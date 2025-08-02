@@ -77,8 +77,11 @@ var InitFishCmd = &cobra.Command{
 }
 
 func init() {
-	RootCmd.PersistentFlags().StringVarP(&flagvars.ConfigFlag, "config", "c", "", "Path to the config file")
 	RootCmd.CompletionOptions.HiddenDefaultCmd = true
+
+	RootCmd.PersistentFlags().BoolVar(&flagvars.DebugMode, "debug", false, "enable debug mode")
+	_ = RootCmd.PersistentFlags().MarkHidden("debug")
+	RootCmd.PersistentFlags().StringVarP(&flagvars.ConfigFlag, "config", "c", "", "Path to the config file")
 	PromptCmd.Flags().BoolVarP(&flagvars.ShowRight, "right", "r", false, "Print the right prompt instead of left prompt")
 
 	RootCmd.AddCommand(InitCmd)
