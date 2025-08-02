@@ -2,17 +2,17 @@ package utils
 
 import (
 	"fmt"
-	"os"
 	"reflect"
 	"regexp"
 	"strings"
 
 	env "github.com/xeyossr/pulsarship/internal"
+	flagvars "github.com/xeyossr/pulsarship/internal/cli/flag_variables"
 )
 
 // check if the PULSARSHIP_DEBUG environment variable is set to "1"
 func IsDebug() bool {
-	return os.Getenv("PULSARSHIP_DEBUG") == "1"
+	return flagvars.DebugMode || env.PULSARSHIP_DEBUG == "1"
 }
 
 // if not in debug mode, execute the function
