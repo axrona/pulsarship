@@ -100,6 +100,12 @@ func GenPrompt(right bool, config models.PromptConfig) (string, error) {
 				continue
 			}
 			result := results[part.Value]
+			if result.Error != nil {
+				if utils.IsDebug() {
+					return "", result.Error
+				}
+			}
+
 			if result.Skip {
 				continue
 			}
