@@ -88,13 +88,13 @@ func HexToRGB(hex string) (int, int, int, error) {
 // Format the text with the specified color using ANSI escape codes
 func Print(text, hex string, palette *map[string]string) string {
 	hex, err := ResolveColor(&hex, *palette)
-	if err != nil {
-		return text
+	if def := Must(err, text); def != nil {
+		return *def
 	}
 
 	r, g, b, err := HexToRGB(hex)
-	if err != nil {
-		return text
+	if def := Must(err, text); def != nil {
+		return *def
 	}
 
 	colorSeq := fmt.Sprintf("\x1b[38;2;%d;%d;%dm", r, g, b)
@@ -118,8 +118,8 @@ func RenderFormat(format string, vars map[string]string, palette *map[string]str
 	var err error
 
 	result := coloredBlockReg.ReplaceAllStringFunc(format, func(match string) string {
-		if err != nil {
-			return match
+		if def := Must(err, match); def != nil {
+			return *def
 		}
 
 		matches := coloredBlockReg.FindStringSubmatch(match)
@@ -130,8 +130,8 @@ func RenderFormat(format string, vars map[string]string, palette *map[string]str
 		content := matches[2]
 
 		resolved := bracedVarRegex.ReplaceAllStringFunc(content, func(m string) string {
-			if err != nil {
-				return m
+			if def := Must(err, m); def != nil {
+				return *def
 			}
 			key := bracedVarRegex.FindStringSubmatch(m)[1]
 			if val, ok := vars[key]; ok {
@@ -143,13 +143,13 @@ func RenderFormat(format string, vars map[string]string, palette *map[string]str
 		return Print(resolved, colorName, palette)
 	})
 
-	if err != nil {
-		return "", err
+	if def := Must(err, ""); def != nil {
+		return *def, err
 	}
 
 	result = bracedVarRegex.ReplaceAllStringFunc(result, func(m string) string {
-		if err != nil {
-			return m
+		if def := Must(err, m); def != nil {
+			return *def
 		}
 		key := bracedVarRegex.FindStringSubmatch(m)[1]
 		if val, ok := vars[key]; ok {
@@ -158,8 +158,8 @@ func RenderFormat(format string, vars map[string]string, palette *map[string]str
 		return m
 	})
 
-	if err != nil {
-		return "", err
+	if def := Must(err, ""); def != nil {
+		return *def, err
 	}
 
 	return result, nil

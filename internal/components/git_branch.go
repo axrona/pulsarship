@@ -42,8 +42,8 @@ func findGitRoot(start string) (string, error) {
 func (g *GitBranchComponent) Val() (string, error) {
 	branchCmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
 	branchOut, err := branchCmd.Output()
-	if err != nil {
-		return "", err
+	if def := utils.Must(err, ""); def != nil {
+		return *def, err
 	}
 	branch := strings.TrimSpace(string(branchOut))
 
@@ -53,8 +53,8 @@ func (g *GitBranchComponent) Val() (string, error) {
 func (g *GitBranchComponent) Render() (models.Result, error) {
 	utils.SetDefault(&g.Config.Format, "^(#e6e7ae)on^ ^(#b8a9f9) {branch}^")
 	val, err := g.Val()
-	if err != nil {
-		return models.Result{Skip: true}, err
+	if def := utils.Must(err, SkipComponent); def != nil {
+		return *def, nil
 	}
 
 	rendered, err := utils.RenderFormat(*g.Config.Format, map[string]string{

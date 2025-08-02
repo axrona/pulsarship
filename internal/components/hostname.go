@@ -23,8 +23,8 @@ func init() {
 
 func (h *HostnameComponent) Val() (string, error) {
 	hostname, err := os.Hostname()
-	if err != nil {
-		return "", err
+	if def := utils.Must(err, ""); def != nil {
+		return *def, err
 	}
 	if hostname == "" {
 		return "", nil
@@ -38,16 +38,16 @@ func (h *HostnameComponent) Render() (models.Result, error) {
 	var format string = *h.Config.Format
 
 	val, err := h.Val()
-	if err != nil {
-		return models.Result{Skip: true}, err
+	if def := utils.Must(err, SkipComponent); def != nil {
+		return *def, err
 	}
 
 	rendered, err := utils.RenderFormat(format, map[string]string{
 		"hostname": val,
 	}, (*map[string]string)(&h.Palette))
 
-	if err != nil {
-		return models.Result{Skip: true}, err
+	if def := utils.Must(err, SkipComponent); def != nil {
+		return *def, err
 	}
 
 	return models.Result{Value: rendered}, nil

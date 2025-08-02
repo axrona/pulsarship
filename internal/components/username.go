@@ -23,9 +23,10 @@ func init() {
 
 func (u *UsernameComponent) Val() (string, error) {
 	username, err := user.Current()
-	if err != nil {
-		return "", err
+	if def := utils.Must(err, ""); def != nil {
+		return *def, err
 	}
+
 	if username.Name == "" {
 		return "", nil
 	}
@@ -38,16 +39,16 @@ func (u *UsernameComponent) Render() (models.Result, error) {
 	var format string = *u.Config.Format
 
 	val, err := u.Val()
-	if err != nil {
-		return models.Result{Skip: true}, err
+	if def := utils.Must(err, SkipComponent); def != nil {
+		return *def, err
 	}
 
 	rendered, err := utils.RenderFormat(format, map[string]string{
 		"username": val,
 	}, (*map[string]string)(&u.Palette))
 
-	if err != nil {
-		return models.Result{Skip: true}, err
+	if def := utils.Must(err, SkipComponent); def != nil {
+		return *def, err
 	}
 
 	return models.Result{Value: rendered}, nil
