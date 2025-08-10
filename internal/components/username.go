@@ -22,16 +22,8 @@ func init() {
 }
 
 func (u *UsernameComponent) Val() (string, error) {
-	username, err := user.Current()
-	if def := utils.Must(err, ""); def != nil {
-		return *def, err
-	}
-
-	if username.Name == "" {
-		return "", nil
-	}
-
-	return username.Name, nil
+	username := os.Getenv("USER")
+	return username, nil
 }
 
 func (u *UsernameComponent) Render() (models.Result, error) {
