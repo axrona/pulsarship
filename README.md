@@ -7,7 +7,6 @@
 [![Go Version](https://img.shields.io/badge/Go-1.24+-blue?style=for-the-badge&logo=go&logoColor=white)](https://golang.org/dl/)
 [![Release](https://img.shields.io/github/v/release/xeyossr/pulsarship?style=for-the-badge&logo=github&logoColor=white&v=1)](https://github.com/xeyossr/pulsarship/releases/latest)
 [![Platform](https://img.shields.io/badge/platform-Linux-lightgrey?style=for-the-badge&logo=linux&logoColor=white)](https://www.kernel.org/)
-[![Development](https://img.shields.io/badge/development-active-brightgreen?style=for-the-badge&logo=github&logoColor=white)](https://github.com/xeyossr/pulsarship/graphs/commit-activity)
 
 ---
 
