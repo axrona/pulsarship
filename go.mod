@@ -1,4 +1,4 @@
-module github.com/xeyossr/pulsarship
+module github.com/axrona/pulsarship
 
 go 1.24.5
 

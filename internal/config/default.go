@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/xeyossr/pulsarship/internal/models"
-	"github.com/xeyossr/pulsarship/internal/utils"
+	"github.com/axrona/pulsarship/internal/models"
+	"github.com/axrona/pulsarship/internal/utils"
 )
 
 var DefaultConfig = models.PromptConfig{

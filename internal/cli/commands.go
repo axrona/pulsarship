@@ -5,9 +5,9 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	flagvars "github.com/xeyossr/pulsarship/internal/cli/flag_variables"
-	"github.com/xeyossr/pulsarship/internal/config"
-	initShell "github.com/xeyossr/pulsarship/internal/init"
+	flagvars "github.com/axrona/pulsarship/internal/cli/flag_variables"
+	"github.com/axrona/pulsarship/internal/config"
+	initShell "github.com/axrona/pulsarship/internal/init"
 )
 
 var RootCmd = &cobra.Command{

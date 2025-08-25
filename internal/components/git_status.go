@@ -6,8 +6,8 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/xeyossr/pulsarship/internal/models"
-	"github.com/xeyossr/pulsarship/internal/utils"
+	"github.com/axrona/pulsarship/internal/models"
+	"github.com/axrona/pulsarship/internal/utils"
 )
 
 type GitStatusComponent struct {

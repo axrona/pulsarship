@@ -1,6 +1,6 @@
 package components
 
-import "github.com/xeyossr/pulsarship/internal/models"
+import "github.com/axrona/pulsarship/internal/models"
 
 type ComponentFactory func(config any, palette models.PaletteConfig) models.Component
 

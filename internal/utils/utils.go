@@ -6,8 +6,8 @@ import (
 	"regexp"
 	"strings"
 
-	env "github.com/xeyossr/pulsarship/internal"
-	flagvars "github.com/xeyossr/pulsarship/internal/cli/flag_variables"
+	env "github.com/axrona/pulsarship/internal"
+	flagvars "github.com/axrona/pulsarship/internal/cli/flag_variables"
 )
 
 // check if the PULSARSHIP_DEBUG environment variable is set to "1"

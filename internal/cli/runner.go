@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/xeyossr/pulsarship/internal/components"
-	cfg "github.com/xeyossr/pulsarship/internal/config"
-	"github.com/xeyossr/pulsarship/internal/utils"
+	"github.com/axrona/pulsarship/internal/components"
+	cfg "github.com/axrona/pulsarship/internal/config"
+	"github.com/axrona/pulsarship/internal/utils"
 )
 
 func RunPrompt(path string, out io.Writer) error {

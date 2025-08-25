@@ -42,7 +42,7 @@ fi
 # Clone Pulsarship repo into temp dir
 TMP_DIR=$(mktemp -d -t pulsarship-XXXXXX)
 print_info "🚀 Cloning the Pulsarship repository into $TMP_DIR..."
-git clone https://github.com/xeyossr/pulsarship "$TMP_DIR"
+git clone https://github.com/axrona/pulsarship "$TMP_DIR"
 cd "$TMP_DIR"
 
 # Build Pulsarship

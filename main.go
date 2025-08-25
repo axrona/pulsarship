@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/xeyossr/pulsarship/internal/cli"
+	"github.com/axrona/pulsarship/internal/cli"
 )
 
 var (

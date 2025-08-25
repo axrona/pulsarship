@@ -8,9 +8,9 @@ import (
 	"strings"
 
 	"github.com/pelletier/go-toml/v2"
-	env "github.com/xeyossr/pulsarship/internal"
-	"github.com/xeyossr/pulsarship/internal/models"
-	"github.com/xeyossr/pulsarship/internal/utils"
+	env "github.com/axrona/pulsarship/internal"
+	"github.com/axrona/pulsarship/internal/models"
+	"github.com/axrona/pulsarship/internal/utils"
 )
 
 func DeepMerge(dst, src interface{}) {

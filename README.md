@@ -3,9 +3,9 @@
 <div align="center">
   
 <!-- Badges -->
-[![License: GPL3](https://img.shields.io/github/license/xeyossr/pulsarship?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](https://github.com/xeyossr/pulsarship/blob/main/LICENSE)
+[![License: GPL3](https://img.shields.io/github/license/axrona/pulsarship?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](https://github.com/axrona/pulsarship/blob/main/LICENSE)
 [![Go Version](https://img.shields.io/badge/Go-1.24+-blue?style=for-the-badge&logo=go&logoColor=white)](https://golang.org/dl/)
-[![Release](https://img.shields.io/github/v/release/xeyossr/pulsarship?style=for-the-badge&logo=github&logoColor=white&v=1)](https://github.com/xeyossr/pulsarship/releases/latest)
+[![Release](https://img.shields.io/github/v/release/axrona/pulsarship?style=for-the-badge&logo=github&logoColor=white&v=1)](https://github.com/axrona/pulsarship/releases/latest)
 [![Platform](https://img.shields.io/badge/platform-Linux-lightgrey?style=for-the-badge&logo=linux&logoColor=white)](https://www.kernel.org/)
 
 ---
@@ -57,7 +57,7 @@ paru -S pulsarship
 You can install `pulsarship` with a single command:
 
 ```bash
-curl -sS https://raw.githubusercontent.com/xeyossr/pulsarship/main/install.sh | bash
+curl -sS https://raw.githubusercontent.com/axrona/pulsarship/main/install.sh | bash
 ```
 
 This script will clone the repository, build the binary, and install it for you.
@@ -93,13 +93,13 @@ The default config file location is `~/.config/pulsarship/pulsarship.toml`.
 You can generate this file by running the `pulsarship gen-config` command.
 
 Pulsarship uses TOML-based configuration for customizing the prompt and other settings.   
-For more information visit the [Wiki](https://github.com/xeyossr/pulsarship/wiki).
+For more information visit the [Wiki](https://github.com/axrona/pulsarship/wiki).
 
 ## 🤝 Contributing
 Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## 🐞 Reporting Issues
-Found a bug or have a suggestion? [Open an issue](https://github.com/xeyossr/pulsarship/issues). Be concise and include any relevant output or screenshots.
+Found a bug or have a suggestion? [Open an issue](https://github.com/axrona/pulsarship/issues). Be concise and include any relevant output or screenshots.
 
 ## 📜 License
 This project is licensed under the **GNU General Public License v3.0.**
